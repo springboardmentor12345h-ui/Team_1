@@ -1,0 +1,286 @@
+.ae-page {
+    margin: 0;
+    width: 100%;
+    background: #f5f7fb;
+    min-height: 100vh;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.ae-wrapper {
+    width: 90%;
+    max-width: 1300px;
+}
+
+.ae-header {
+    margin-bottom: 20px;
+}
+
+.ae-title {
+    font-family: 'kanit';
+    font-size: 32px;
+    font-weight: 700;
+    color: #1b1b1b;
+    margin: 0;
+}
+
+.ae-subtitle {
+    color: #555;
+    margin-top: 6px;
+    font-size: 15px;
+}
+
+.ae-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+/* FILTER PANEL */
+.ae-filters {
+    width: 100%;
+}
+
+.ae-filter-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ae-filter-heading {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.ae-filter-group {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ae-filter-label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #333;
+}
+
+.date{
+    gap:1rem;
+}
+.ae-select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color:white;
+    color: grey;
+    font-weight: bold;
+    font-size: 15px;
+    outline: none;
+}
+
+.ae-select:focus {
+    border-color: #6b4ce6;
+}
+
+.ae-clear-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 8px;
+    border: 1px solid rgba(128, 128, 128, 0.147);
+    color: rgba(0, 0, 0, 0.696);
+    background: white;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ae-clear-btn:hover {
+    background: #e2e2e268;
+}
+
+/* MAIN PANEL */
+.ae-content {
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ae-search-row {
+    display: flex;
+    margin-bottom: 18px;
+}
+
+.ae-search-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #d3d3d3;
+    font-size: 15px;
+    background-color: white;
+    color: black;
+}
+
+.ae-search-input:hover {
+    box-shadow: none;
+    border: 1px solid #d3d3d3;
+}
+
+
+.ae-count-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.ae-count {
+    font-size: 14px;
+    color: #6b4ce6;
+    font-weight: 600;
+}
+
+/* GRID */
+.ae-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px;
+}
+
+.ae-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px gray;
+}
+
+/* IMAGE */
+.ae-card-img-wrapper {
+    height: 220px;
+    width: 100%;
+    position: relative;
+}
+
+.ae-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ae-status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #c8f3db;
+    color: #105f36;
+    padding: 6px 12px;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* BODY */
+.ae-card-body {
+    padding: 18px;
+}
+
+.ae-category-badge {
+    display: inline-block;
+    background: black;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ae-event-title {
+    font-size: 18px;
+    font-family: 'kanit';
+    margin: 6px 0 10px 0;
+    font-weight: 600;
+    color: #222;
+}
+
+.ae-event-desc {
+    color: #555;
+    font-size: 14px;
+    min-height: 46px;
+}
+
+/* META */
+.ae-meta-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #333;
+}
+
+.ae-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ae-meta-right {
+    margin-left: auto;
+}
+
+/* DETAILS BUTTON */
+.ae-details-btn {
+    width: fit-content;
+    margin-top: 16px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    background: #6b4ce6;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ae-details-btn:hover {
+    background: #593acb;
+}
+.ae-date-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.ae-date-input {
+    width: 100%;
+    padding-right: 42px;
+    height: 44px;
+    box-sizing: border-box;
+}
+
+.ae-date-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+/* Image zoom on hover for All Events cards */
+.ae-card-img {
+    transition: transform 0.3s ease;
+}
+
+.ae-card:hover .ae-card-img {
+    transform: scale(1.1);
+}

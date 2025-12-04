@@ -1,0 +1,145 @@
+.login-container {
+  height: fit-content;
+  border-radius: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form>input {
+  background-color: white;
+  box-shadow: 2px 5px 10px 5px rgba(0, 0, 0, 0.4);
+  color: #000000;
+}
+
+.login-card {
+  width: 400px;
+  padding: 40px;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 25px 25px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  font-family: 'kanit';
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #333333;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-field {
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #dcdde1;
+  font-size: 15px;
+  outline: none;
+}
+
+input:hover {
+  border-color: #000000;
+  cursor: text;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  caret-color: #000000;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+.login-btn {
+  padding: 14px;
+  background: #4b4e53;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+
+.link-item {
+  font-size: 14px;
+  color: #6a6464;
+  text-decoration: none;
+  background-color: white;
+  border: 1px solid #dcdde1;
+
+}
+
+.link-item:hover,
+.login-btn:hover {
+  box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+  border: none;
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  padding: 8px 16px;
+  background-color: #4c8df6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+
+
+@media (max-width: 600px) {
+  .login-card {
+    width: 90%;
+    padding: 20px;
+    box-shadow: 20px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .input-field {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .login-btn {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .links {
+    gap: 6px;
+  }
+
+  .link-item {
+    font-size: 13px;
+  }
+
+  .login-container {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,188 @@
+.fa-page {
+  font-family: system-ui, sans-serif;
+  background: #f8fafc;
+  min-height: 100vh;
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+.fa-inner{
+    width: 70%;
+    margin:3rem 4rem 4rem 4rem;
+    padding:3rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.22);
+}
+/* Title */
+.fa-title {
+  font-size: 28px;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.fa-subtitle {
+  font-size: 15px;
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+/* Top Stats Row */
+.fa-stats-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.fa-card {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  flex: 1;
+  box-shadow: 0 7px 18px rgba(0,0,0,0.06);
+  border: 1px solid #ccc;
+}
+
+.fa-card>h3{
+    color: black;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+}
+
+/* Average Rating */
+.fa-rating-value {
+  font-size: 40px;
+  font-weight: 700;
+  color: #111827;
+  margin: 8px 0;
+}
+
+.fa-rating-based {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Total Feedback */
+.fa-feedback-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin: 8px 0;
+}
+
+.fa-feedback-change {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Sentiment */
+.fa-sentiment-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #16a34a;
+  margin: 8px 0;
+}
+
+.fa-sentiment-note {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Middle Row Layout */
+.fa-middle-row {
+  display: flex;
+  gap: 20px;
+}
+
+/* Rating Distribution */
+.fa-distribution-card {
+  flex: 1;
+}
+
+.fa-distribution-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fa-distribution-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fa-star-label {
+  width: 30px;
+  font-size: 14px;
+  color: #111827;
+}
+
+.fa-bar-bg {
+  flex: 1;
+  background: #e5e7eb;
+  border-radius: 6px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.fa-bar-fill {
+  height: 100%;
+  background: #475569;
+  border-radius: 6px;
+}
+
+.fa-bar-count {
+  width: 20px;
+  text-align: right;
+  font-size: 14px;
+  color: #111827;
+}
+
+/* Recent Feedback */
+.fa-recent-card {
+  flex: 1.5;
+}
+
+.fa-recent-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fa-recent-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.fa-recent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fa-recent-event {
+  font-weight: 600;
+  color: #111827;
+}
+
+.fa-recent-user {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.fa-recent-stars {
+  font-size: 16px;
+  color: #fbbf24;
+}
+
+.fa-recent-comment {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #374151;
+}

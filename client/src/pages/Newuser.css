@@ -1,0 +1,108 @@
+.newuser-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef1f8;
+  padding: 40px 0;
+}
+
+.input-field {
+  color: black;
+  padding: 12px;
+  box-shadow: 2px 5px 10px 5px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  border: 1px solid #d3d3d3;
+  font-size: 14px;
+  outline: none;
+  background: #fafafa;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.input-field:focus {
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(122,92,255,0.15);
+}
+
+.newuser-card {
+  width: 420px;
+  padding: 35px 32px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+}
+
+.newuser-title {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.newuser-subtitle {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: #777;
+}
+
+.newuser-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.newuser-input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d3d3d3;
+  font-size: 14px;
+  outline: none;
+  background: #fafafa;
+}
+
+.newuser-select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d3d3d3;
+  font-size: 14px;
+  outline: none;
+  color: #666;
+  background: #fafafa;
+  box-shadow: 2px 5px 10px 5px rgba(0, 0, 0, 0.4);
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='32' width='32' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 26px;
+  appearance: none;
+}
+
+
+.newuser-input:focus {
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(122,92,255,0.15);
+}
+
+.newuser-select:focus {
+  background: #fff;
+  border:1px solid black;
+  box-shadow: 0 0 0 3px rgba(122,92,255,0.15);
+}
+
+.newuser-btn {
+  padding: 14px;
+  color: white;
+  border: none;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.newuser-btn:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,168 @@
+.ce-page {
+  min-height: 100vh;
+  background: #f3f4f6;
+  padding: 40px 0;
+  width:100%;
+  display:flex;
+  align-items: center;
+  justify-content:space-evenly;
+  flex-direction: column;
+}
+
+.ce-container{
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.22);
+  width:60%;
+  padding: 3rem;
+}
+
+.backb-container{
+  width:76%;
+  display: flex;
+  align-items: flex-start;
+  justify-content:flex-start;
+}
+
+.ce-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  font-family: system-ui, sans-serif;
+}
+
+.ce-back {
+  background: #6b4ce6;
+  font-weight: bold;
+  border-radius: 20px;
+  box-shadow: 0 18px 15px rgba(15, 23, 42, 0.12);
+  font-size: 14px;
+  color: white;
+  border:2px solid rgb(218, 218, 218);
+  cursor: pointer;
+  margin-bottom:1.5rem;
+}
+
+.ce-title {
+  color:black;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.ce-subtitle {
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.ce-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ce-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.ce-field label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.ce-field input,
+.ce-field textarea,
+.ce-field select {
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  background: white;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.4);
+  color: #000000;
+}
+
+.ce-field input:hover,
+.ce-field textarea:hover,
+.ce-field select:hover {
+  border:1px solid #d1d5db;
+  box-shadow: none;
+}
+
+.ce-row {
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+}
+
+.ce-row2{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+}
+
+.ce-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  font-family: 'kanit';
+}
+
+.ce-submit {
+  flex: 1;
+  background: linear-gradient(90deg, #8b5cf6, #6366f1);
+  color: white;
+  padding: 12px 0;
+  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.ce-cancel {
+  flex: 1;
+  background: #e5e7eb;
+  color: #374151;
+  padding: 12px 0;
+  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.ce-submit:hover {
+  background: linear-gradient(90deg, #7c3aed, #4f46e5);
+}
+
+.ce-cancel:hover {
+  background: #d1d5db;
+}
+
+/* Date-time icon wrapper */
+.dt-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.dt-wrapper input[type="datetime-local"] {
+  padding-right: 32px;
+}
+
+.dt-icon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 18px;
+  opacity: 0.75;
+}
