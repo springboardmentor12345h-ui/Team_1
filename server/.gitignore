@@ -1,0 +1,19 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Logs and runtime
+logs/
+*.log
+pids/
+*.pid
+
+# Coverage / dumps
+coverage/
+dump/
+.nyc_output/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
