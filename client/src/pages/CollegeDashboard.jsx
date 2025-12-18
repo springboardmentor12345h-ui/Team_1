@@ -3,10 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import './CollegeDashboard.css'
 import { useState, useEffect } from "react";
+/* this portion is done by praveen kumar */
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+/* this section of praveen kumar code is end here */
 
 export function CollegeDashboardNavbar() {
   const [activeTab, setActiveTab] = React.useState("dashboard");
   const location = useLocation();
+  /* this portion is done by praveen kumar */
+  const [menuOpen, setMenuOpen] = useState(false);
+  /* this section of praveen kumar code is end here */
 
   React.useEffect(() => {
     if (location.pathname.includes("/college-dashboard")) setActiveTab("dashboard");
@@ -22,9 +29,21 @@ export function CollegeDashboardNavbar() {
   };
   return (
     <div className="top-navbar">
-      <div className="brand">CampusEventHub</div>
+      {/* this portion is done by praveen kumar */}
+      <div className="brand">
+        <img src="/Logo.png" alt="Logo" className="brand-logo" />
+        CampusEventHub
+      </div>
 
-      <div className="nav-links">
+      {/* Hamburger Menu Icon for Mobile */}
+      <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
+        <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+      </div>
+      {/* this section of praveen kumar code is end here */}
+
+      {/* this portion is done by praveen kumar */}
+      <div className={`nav-links ${menuOpen ? "nav-links-mobile-open" : ""}`}>
+      {/* this section of praveen kumar code is end here */}
         <a
           className={activeTab === "dashboard" ? "nav-link active" : "nav-link"}
           onClick={() => { setActiveTab("dashboard"); navigate("/college-dashboard"); }}
@@ -55,6 +74,13 @@ export function CollegeDashboardNavbar() {
         >
           Feedback
         </a>
+        
+        {/* this portion is done by praveen kumar */}
+        {/* Logout option for mobile menu */}
+        <a className="mobile-logout" onClick={handleLogout}>
+          Logout
+        </a>
+        {/* this section of praveen kumar code is end here */}
       </div>
 
       <div className="user-box">
@@ -140,12 +166,14 @@ export default function CollegeDashboard() {
           </div>
         </div>
         <div className="upcoming-events-title">Upcoming Events</div>
-        <div
-          className="view-all-btn purple-btn"
+        {/* this portion is done by praveen kumar */}
+        <button
+          className="view-all-btn"
           onClick={() => navigate("/all-events")}
         >
           View All →
-        </div>
+        </button>
+        {/* this section of praveen kumar code is end here */}
 
         <div className="upcoming-events-container">
           {events.slice(0, 6).map((event) => (

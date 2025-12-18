@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import "./EventDetails.css";
+import axios from "axios";
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -14,6 +15,8 @@ const EventDetails = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [regStatus, setRegStatus] = useState(null);
+  const [hasFeedback, setHasFeedback] = useState(false);
+
   useEffect(() => {
     fetch(`http://localhost:5000/events/${id}`)
       .then(res => res.json())
@@ -29,6 +32,15 @@ const EventDetails = () => {
           );
           if (match) setRegStatus(match.status);
         });
+      // Feedback check block
+      fetch(`http://localhost:5000/api/feedback/event/${id}`)
+        .then(res => res.json())
+        .then(list => {
+          const fbList = Array.isArray(list) ? list : list.data || [];
+          const exists = fbList.some(fb => fb.user_id === user._id || fb.user_id?._id === user._id);
+          setHasFeedback(exists);
+        })
+        .catch(err => console.error("Feedback check error:", err));
     }
   }, [id]);
 
@@ -105,6 +117,44 @@ const EventDetails = () => {
     } catch (error) {
       console.error(error);
       alert("Error registering.");
+    }
+  };
+
+  const submitFeedback = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("Please login first.");
+        return;
+      }
+
+      const payload = {
+        event_id: event._id,
+        user_id: user._id,
+        rating: rating,
+        comments: comment
+      };
+
+      const res = await fetch("http://localhost:5000/api/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert("Failed to submit feedback");
+        return;
+      }
+
+      alert("Feedback submitted");
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert("Server error submitting feedback");
     }
   };
 
@@ -214,12 +264,22 @@ const EventDetails = () => {
               </div>
             </section>
             {fromStudent && (
-              <button
-                className="ed-feedback-btn"
-                onClick={() => setShowFeedback(true)}
-              >
-                Leave Feedback
-              </button>
+              hasFeedback ? (
+                <button
+                  className="ed-feedback-btn"
+                  style={{ backgroundColor: "#999", cursor: "not-allowed" }}
+                  disabled
+                >
+                  Feedback Submitted
+                </button>
+              ) : (
+                <button
+                  className="ed-feedback-btn"
+                  onClick={() => setShowFeedback(true)}
+                >
+                  Leave Feedback
+                </button>
+              )
             )}
           </aside>
         </div>
@@ -282,6 +342,7 @@ const EventDetails = () => {
                 <button
                   className="ed-confirm-delete-btn"
                   disabled={rating === 0 || comment.trim() === ""}
+                  onClick={submitFeedback}
                 >
                   Submit
                 </button>

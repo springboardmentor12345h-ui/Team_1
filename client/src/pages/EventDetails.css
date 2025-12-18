@@ -461,3 +461,153 @@
     color: #374151;
     border: 1px solid #d1d5db;
 }
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
+/* Mobile Responsiveness */
+/* ============================================ */
+
+@media (max-width: 768px) {
+  .ed-page {
+    padding: 20px 0;
+  }
+
+  .ed-inner {
+    max-width: 95vw;
+    padding: 0 10px;
+  }
+
+  .ed-hero-card {
+    padding: 8px;
+    margin-bottom: 20px;
+  }
+
+  .ed-hero-image-wrapper {
+    height: 30vh;
+  }
+
+  .ed-hero-overlay {
+    padding: 15px 18px;
+  }
+
+  .ed-hero-title {
+    font-size: 20px;
+  }
+
+  .ed-hero-meta {
+    font-size: 12px;
+  }
+
+  .ed-hero-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .ed-layout {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ed-main {
+    width: 100%;
+  }
+
+  .ed-sidebar {
+    width: 100%;
+  }
+
+  .ed-card {
+    padding: 18px;
+  }
+
+  .ed-section-title {
+    font-size: 18px;
+  }
+
+  .ed-description,
+  .ed-requirements,
+  .ed-tags {
+    font-size: 14px;
+  }
+
+  .ed-info-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .ed-info-item {
+    width: 100%;
+  }
+
+  .ed-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ed-btn-primary,
+  .ed-btn-secondary {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ed-inner {
+    max-width: 98vw;
+    padding: 0 5px;
+  }
+
+  .ed-hero-image-wrapper {
+    height: 25vh;
+  }
+
+  .ed-hero-title {
+    font-size: 18px;
+  }
+
+  .ed-hero-meta {
+    font-size: 11px;
+  }
+
+  .ed-card {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .ed-section-title {
+    font-size: 16px;
+  }
+
+  .ed-description,
+  .ed-requirements {
+    font-size: 13px;
+  }
+
+  .ed-info-label {
+    font-size: 12px;
+  }
+
+  .ed-info-value {
+    font-size: 14px;
+  }
+
+  .ed-btn-primary,
+  .ed-btn-secondary {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .ed-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .status-approved,
+  .status-rejected,
+  .status-unregistered {
+    font-size: 12px;
+    padding: 4px 15px;
+  }
+}
+
+/* this section of praveen kumar code is end here */

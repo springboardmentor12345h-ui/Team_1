@@ -93,23 +93,29 @@ export default function ManageParticipants() {
                     </thead>
 
                     <tbody>
+                        {/* this portion is done by praveen kumar */}
                         {participants.map((p) => (
                             <tr key={p._id}>
-                                <td>
+                                <td data-label="Student Name">
+                                {/* this section of praveen kumar code is end here */}
                                     <div className="mp-student-name">{p.userId?.name}</div>
                                     <div className="mp-student-email">{p.userId?.email}</div>
                                 </td>
 
-                                <td>{p.eventId?.title}</td>
-                                <td>{new Date(p.createdAt).toLocaleDateString()}</td>
+                                {/* this portion is done by praveen kumar */}
+                                <td data-label="Event">{p.eventId?.title}</td>
+                                <td data-label="Date">{new Date(p.createdAt).toLocaleDateString()}</td>
 
-                                <td>
+                                <td data-label="Status">
+                                {/* this section of praveen kumar code is end here */}
                                     <span className={`mp-status mp-status-${p.status.toLowerCase()}`}>
                                         {p.status}
                                     </span>
                                 </td>
 
-                                <td>
+                                {/* this portion is done by praveen kumar */}
+                                <td data-label="Actions">
+                                {/* this section of praveen kumar code is end here */}
                                     {p.status === "Pending" && (
                                         <div className="mp-actions">
                                             <button className="mp-approve-btn" onClick={() => handleApprove(p._id)}>✓</button>

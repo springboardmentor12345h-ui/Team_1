@@ -15,6 +15,9 @@ export default function AllEvents() {
     const [statusFilter, setStatusFilter] = useState("All Status");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    /* this portion is done by praveen kumar */
+    const [showFilters, setShowFilters] = useState(false); // For mobile filter toggle
+    /* this section of praveen kumar code is end here */
 
     useEffect(() => {
         let mounted = true;
@@ -80,8 +83,17 @@ export default function AllEvents() {
 
                 <div className="ae-layout">
 
+                    {/* this portion is done by praveen kumar */}
+                    {/* Mobile Filter Toggle Button */}
+                    <button className="ae-filter-toggle" onClick={() => setShowFilters(!showFilters)}>
+                        {showFilters ? '✕ Close Filters' : '☰ Show Filters'}
+                    </button>
+                    {/* this section of praveen kumar code is end here */}
+
                     {/* FILTERS */}
-                    <aside className="ae-filters">
+                    {/* this portion is done by praveen kumar */}
+                    <aside className={`ae-filters ${showFilters ? 'ae-filters-mobile-open' : ''}`}>
+                    {/* this section of praveen kumar code is end here */}
                         <div className="ae-filter-card">
 
                             <h3 className="ae-filter-heading">Filters</h3>

@@ -1,3 +1,4 @@
+/* this portion is done by praveen kumar */
 .ae-page {
     margin: 0;
     width: 100%;
@@ -6,12 +7,17 @@
     padding: 40px 0;
     display: flex;
     justify-content: center;
+    overflow-x: hidden;
 }
+/* this section of praveen kumar code is end here */
 
+/* this portion is done by praveen kumar */
 .ae-wrapper {
     width: 90%;
     max-width: 1300px;
+    box-sizing: border-box;
 }
+/* this section of praveen kumar code is end here */
 
 .ae-header {
     margin-bottom: 20px;
@@ -36,7 +42,36 @@
     grid-template-columns: 280px 1fr;
     gap: 30px;
     margin-top: 25px;
+    /* this portion is done by praveen kumar */
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    /* this section of praveen kumar code is end here */
 }
+
+/* this portion is done by praveen kumar */
+/* Filter Toggle Button - Hidden by default on desktop */
+.ae-filter-toggle {
+    display: none;
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    background: #6b4ce6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(107, 76, 230, 0.3);
+    transition: all 0.3s ease;
+}
+
+.ae-filter-toggle:hover {
+    background: #5a3dd5;
+    box-shadow: 0 4px 12px rgba(107, 76, 230, 0.4);
+}
+/* this section of praveen kumar code is end here */
 
 /* FILTER PANEL */
 .ae-filters {
@@ -148,18 +183,26 @@
 }
 
 /* GRID */
+/* this portion is done by praveen kumar */
 .ae-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 26px;
+    box-sizing: border-box;
+    width: 100%;
 }
+/* this section of praveen kumar code is end here */
 
+/* this portion is done by praveen kumar */
 .ae-card {
     background: white;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 8px gray;
+    box-sizing: border-box;
+    width: 100%;
 }
+/* this section of praveen kumar code is end here */
 
 /* IMAGE */
 .ae-card-img-wrapper {
@@ -284,3 +327,167 @@
 .ae-card:hover .ae-card-img {
     transform: scale(1.1);
 }
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
+/* Mobile Responsiveness */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .ae-page {
+        padding: 20px 0;
+    }
+
+    .ae-wrapper {
+        width: 95%;
+    }
+
+    .ae-title {
+        font-size: 24px;
+    }
+
+    .ae-subtitle {
+        font-size: 13px;
+    }
+
+    /* this portion is done by praveen kumar */
+    /* Show filter toggle button on mobile */
+    .ae-filter-toggle {
+        display: block;
+    }
+
+    /* Stack filters and content vertically */
+    .ae-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Hide filters by default on mobile */
+    .ae-filters {
+        display: none;
+        width: 100%;
+    }
+
+    /* Show filters when toggle is active */
+    .ae-filters.ae-filters-mobile-open {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    /* this section of praveen kumar code is end here */
+
+    .ae-filter-card {
+        padding: 15px;
+    }
+
+    .ae-content {
+        padding: 15px;
+    }
+
+    /* this portion is done by praveen kumar */
+    /* Single column grid on mobile */
+    .ae-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0;
+        margin: 0;
+    }
+    /* this section of praveen kumar code is end here */
+
+    .ae-card-img-wrapper {
+        height: 180px;
+    }
+
+    .ae-event-title {
+        font-size: 16px;
+    }
+
+    .ae-event-desc {
+        font-size: 13px;
+        min-height: auto;
+    }
+
+    .ae-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .ae-meta-right {
+        margin-left: 0;
+    }
+
+    .ae-details-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* this portion is done by praveen kumar */
+@media (max-width: 480px) {
+    .ae-wrapper {
+        width: 90%;
+        padding: 0;
+        margin-left: 0;
+        margin-right: 20px;
+    }
+/* this section of praveen kumar code is end here */
+
+    .ae-page {
+        padding: 10px 0;
+    }
+
+    .ae-title {
+        font-size: 20px;
+    }
+
+    .ae-subtitle {
+        font-size: 12px;
+    }
+
+    .ae-filter-card {
+        padding: 12px;
+    }
+
+    .ae-filter-heading {
+        font-size: 18px;
+    }
+
+    .ae-content {
+        padding: 12px;
+    }
+
+    .ae-card-img-wrapper {
+        height: 150px;
+    }
+
+    .ae-card-body {
+        padding: 12px;
+    }
+
+    .ae-event-title {
+        font-size: 15px;
+    }
+
+    .ae-category-badge {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+
+    .ae-select {
+        font-size: 13px;
+        padding: 10px;
+    }
+}
+
+/* this section of praveen kumar code is end here */

@@ -8,6 +8,15 @@
   padding: 40px 0;
 }
 
+/* this portion is done by praveen kumar */
+/* Logo styling for signup page */
+.login-logo {
+  height: 32px;
+  width: auto;
+  margin-right: 10px;
+}
+/* this section of praveen kumar code is end here */
+
 .input-field {
   color: black;
   padding: 12px;
@@ -106,3 +115,78 @@
 .newuser-btn:hover {
   opacity: 0.9;
 }
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
+/* Mobile Responsiveness */
+/* ============================================ */
+
+@media (max-width: 768px) {
+  .newuser-container {
+    padding: 20px 15px;
+  }
+
+  .newuser-card {
+    width: 90%;
+    max-width: 420px;
+    padding: 30px 25px;
+  }
+
+  .newuser-title {
+    font-size: 22px;
+  }
+
+  .newuser-subtitle {
+    font-size: 13px;
+  }
+
+  .input-field,
+  .newuser-input,
+  .newuser-select {
+    font-size: 13px;
+    padding: 11px;
+  }
+
+  .newuser-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newuser-container {
+    padding: 15px 10px;
+  }
+
+  .newuser-card {
+    width: 95%;
+    padding: 25px 20px;
+  }
+
+  .newuser-title {
+    font-size: 20px;
+  }
+
+  .newuser-subtitle {
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .newuser-form {
+    gap: 15px;
+  }
+
+  .input-field,
+  .newuser-input,
+  .newuser-select {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .newuser-btn {
+    font-size: 13px;
+    padding: 11px;
+  }
+}
+
+/* this section of praveen kumar code is end here */

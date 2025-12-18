@@ -1,7 +1,7 @@
 import './newuser.css'
 import { useState } from "react"
 import axios from "axios"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export default function NewUser() {
   const [name, setName] = useState("")
@@ -53,7 +53,12 @@ export default function NewUser() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2 className="title">Create Account</h2>
+        {/* this portion is done by praveen kumar */}
+        <h2 className="title">
+          <img src="/Logo.png" alt="Logo" className="login-logo" />
+          Create Account
+        </h2>
+        {/* this section of praveen kumar code is end here */}
 
         <form onSubmit={handleSignup} className="login-form">
           <input
@@ -147,11 +152,6 @@ export default function NewUser() {
 
           <button type="submit" className="login-btn">Sign Up</button>
         </form>
-        <div className="links">
-          <button className="link-item" onClick={() => navigate("/")}>
-            Sign In
-          </button> 
-        </div>
       </div>
     </div>
   )

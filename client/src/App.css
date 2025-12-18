@@ -27,7 +27,21 @@
   margin-bottom: 30px;
   font-size: 28px;
   color: #333333;
+  /* this portion is done by praveen kumar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* this section of praveen kumar code is end here */
 }
+
+/* this portion is done by praveen kumar */
+/* Logo styling for login, signup, and forgot password pages */
+.login-logo {
+  height: 32px;
+  width: auto;
+  margin-right: 10px;
+}
+/* this section of praveen kumar code is end here */
 
 .login-form {
   display: flex;
@@ -107,6 +121,11 @@ input:focus::placeholder {
 
 
 
+/* ============================================ */
+/* this portion is done by praveen kumar */
+/* Mobile Responsiveness */
+/* ============================================ */
+
 @media (max-width: 600px) {
   .login-card {
     width: 90%;
@@ -143,3 +162,5 @@ input:focus::placeholder {
     flex-direction: column;
   }
 }
+
+/* this section of praveen kumar code is end here */

@@ -2,8 +2,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import './StudentDashboard.css'
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+/* this portion is done by praveen kumar */
+import { faBell, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'; /* edited by praveen kumar */
+/* this section of praveen kumar code is end here */
 export function StudentDashboardNavbar() {
   const navigate = useNavigate();
+  /* this portion is done by praveen kumar */
+  const [menuOpen, setMenuOpen] = useState(false);
+  /* this section of praveen kumar code is end here */
 
   const handleLogout = () => {
     localStorage.clear();
@@ -11,22 +18,47 @@ export function StudentDashboardNavbar() {
   };
 
   return (
-    <div id="top-navbar">
-      <div id="brand">CampusEventHub</div>
+    <div className="top-navbar">
+      {/* this portion is done by praveen kumar */}
+      <div className="brand">
+        <img src="/Logo.png" alt="Logo" className="brand-logo" />
+        CampusEventHub
+      </div>
+      {/* this section of praveen kumar code is end here */}
 
-      <div id="nav-links">
-        <a id="nav-active" onClick={() => navigate("/student-dashboard")}>
+      {/* this portion is done by praveen kumar */}
+      {/* Mobile Icons - Notification and Hamburger Menu */}
+      <div className="mobile-icons">
+        <FontAwesomeIcon icon={faBell} className="notificationicon mobile-notification" />
+        <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
+          <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+        </div>
+      </div>
+      {/* this section of praveen kumar code is end here */}
+
+      {/* this portion is done by praveen kumar */}
+      <div className={`nav-links ${menuOpen ? "nav-links-mobile-open" : ""}`}>
+      {/* this section of praveen kumar code is end here */}
+        <a className="nav-active" onClick={() => navigate("/student-dashboard")}>
           Dashboard
         </a>
 
         <a onClick={() => navigate("/student-dashboard/all-events")}>
           All Events
         </a>
+        
+        {/* this portion is done by praveen kumar */}
+        {/* Logout option for mobile menu */}
+        <a className="mobile-logout" onClick={handleLogout}>
+          Logout
+        </a>
+        {/* this section of praveen kumar code is end here */}
       </div>
 
-      <div id="user-box">
+      <div className="user-box">
         <span>{JSON.parse(localStorage.getItem("user"))?.email || "User"}</span>
-        <button id="logout-btn" onClick={handleLogout}>Logout</button>
+        <FontAwesomeIcon icon={faBell} className="notificationicon" />
+        <button className="logout-btn" onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );
@@ -67,98 +99,98 @@ export default function StudentDashboard() {
     return reg ? reg.status : "Unregistered";
   };
   return (
-    <div id="dashboard-wrapper">
+    <div className="dashboard-wrapper">
 
       {/* MAIN CONTENT */}
-      <div id="page-container">
+      <div className="page-container">
         
-        <h1 id="page-title">Student Dashboard</h1>
-        <p id="page-sub">Welcome back! Here are your events. </p>
+        <h1 className="page-title">Student Dashboard</h1>
+        <p className="page-sub">Welcome back! Here are your events. </p>
 
         {/* STAT CARDS */}
-        <div id="stats-grid">
+        <div className="stats-grid">
 
-          <div id="stat-card">
-            <p id="stat-label">Registered Events</p>
-            <p id="stat-number">{registrations.length}</p>
+          <div className="stat-card">
+            <p className="stat-label">Registered Events</p>
+            <p className="stat-number">{registrations.length}</p>
           </div>
 
-          <div id="stat-card">
-            <p id="stat-label">Approved</p>
-            <p id="stat-number">
+          <div className="stat-card">
+            <p className="stat-label">Approved</p>
+            <p className="stat-number">
               {registrations.filter(r => r.status === "Approved").length}
             </p>
           </div>
 
-          <div id="stat-card">
-            <p id="stat-label">Pending</p>
-            <p id="stat-number">
+          <div className="stat-card">
+            <p className="stat-label">Pending</p>
+            <p className="stat-number">
               {registrations.filter(r => r.status === "Pending").length}
             </p>
           </div>
 
-          <div id="stat-card">
-            <p id="stat-label">Rejected</p>
-            <p id="stat-number">
+          <div className="stat-card">
+            <p className="stat-label">Rejected</p>
+            <p className="stat-number">
               {registrations.filter(r => r.status === "Rejected").length}
             </p>
           </div>
 
-          <div id="stat-card">
-            <p id="stat-label">Upcoming Events</p>
-            <p id="stat-number">
+          <div className="stat-card">
+            <p className="stat-label">Upcoming Events</p>
+            <p className="stat-number">
               {events.filter(e => !e.completed).length}
             </p>
           </div>
 
-          <div id="stat-card">
-            <p id="stat-label">Total Events Available</p>
-            <p id="stat-number">{events.length}</p>
+          <div className="stat-card">
+            <p className="stat-label">Total Events Available</p>
+            <p className="stat-number">{events.length}</p>
           </div>
 
         </div>
 
       {/* UPCOMING EVENTS */}
-        <div id="upcoming-events-title">Upcoming Events</div>
+        <div className="upcoming-events-title">Upcoming Events</div>
         <div
-          id="view-all-btn"
+          className="view-all-btn"
           onClick={() => navigate("/student-dashboard/all-events")}
         >
           View All →
         </div>
 
-        <div id="upcoming-events-container">
+        <div className="upcoming-events-container">
           {events.slice(0, 6).map((event) => (
-            <div id="event-item" key={event._id}>
-              <div id="event-item-split">
+            <div className="event-item" key={event._id}>
+              <div className="event-item-split">
 
-                <div id="event-item-image">
+                <div className="event-item-image">
                   <img
                     src={event.banner || event.image}
                     alt={event.title}
-                    id="event-img"
+                    className="event-img"
                   />
                 </div>
 
-                <div id="event-item-info">
-                  <div id="float-right">
-                    <span id="event-category-badge">{event.category}</span>
+                <div className="event-item-info">
+                  <div className="float-right">
+                    <span className="event-category-badge">{event.category}</span>
                     {(() => {
                         const st = getStatusForEvent(event._id);
                         return (
-                          <span id="event-status-user" className={`status-${st.toLowerCase()}`}>
+                          <span className={`event-status-user status-${st.toLowerCase()}`}>
                             {st}
                           </span>
                         );
                     })()}
                     
                   </div>
-                  <span id="event-item-title">{event.title}</span>
-                  <div id="event-item-meta">
-                    <p id="event-location-text">{event.location}</p>
+                  <span className="event-item-title">{event.title}</span>
+                  <div className="event-item-meta">
+                    <p className="event-location-text">{event.location}</p>
                   </div>
                   <div className="btn-cnt"><button
-                      id="event-details-btn"
+                      className="event-details-btn"
                       onClick={() =>
                         navigate(`/student-dashboard/all-events/event/${event._id}`, {
                           state: { from: "student" }

@@ -189,3 +189,132 @@
 .mp-reject-btn:hover {
     background: #dc2626;
 }
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
+/* Mobile Responsiveness */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .mp-inner {
+        width: 90%;
+        margin: 2rem 1rem;
+        padding: 2rem;
+    }
+
+    .mp-title {
+        font-size: 24px;
+    }
+
+    .mp-subtitle {
+        font-size: 14px;
+    }
+
+    .mp-filters-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .mp-filter-select,
+    .mp-search,
+    .mp-export-btn {
+        width: 100%;
+    }
+
+    /* Make table responsive - card layout on mobile */
+    .mp-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .mp-table thead {
+        display: none;
+    }
+
+    .mp-table tbody {
+        display: block;
+    }
+
+    .mp-table tr {
+        display: block;
+        margin-bottom: 20px;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 15px;
+        background: white;
+    }
+
+    .mp-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .mp-table td:last-child {
+        border-bottom: none;
+    }
+
+    .mp-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #475569;
+        margin-right: 10px;
+    }
+
+    .mp-actions {
+        justify-content: flex-end;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .mp-inner {
+        width: 95%;
+        margin: 1rem 0.5rem;
+        padding: 1.5rem;
+    }
+
+    .mp-title {
+        font-size: 20px;
+    }
+
+    .mp-subtitle {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .mp-filter-select,
+    .mp-search,
+    .mp-export-btn {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    .mp-table td {
+        font-size: 13px;
+        padding: 8px 0;
+    }
+
+    .mp-student-name {
+        font-size: 14px;
+    }
+
+    .mp-student-email {
+        font-size: 11px;
+    }
+
+    .mp-status {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+
+    .mp-approve-btn,
+    .mp-reject-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+}
+
+/* this section of praveen kumar code is end here */

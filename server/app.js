@@ -6,9 +6,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { connectDB } from "./config/db.js";
+
 import authRoutes from "./routes/auth.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
+import feedbackRoutes from "./routes/feedbackRoutes.js";
 
 const app = express();
 
@@ -24,6 +26,7 @@ connectDB();
 app.use("/auth", authRoutes);
 app.use("/events", eventRoutes);
 app.use("/registrations", registrationRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 // Server
 app.listen(5000, () => {

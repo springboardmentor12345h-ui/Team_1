@@ -44,7 +44,13 @@ export default function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2 className="title">Login to CampusEventHub</h2>
+        {/* this portion is done by praveen kumar */}
+        <h2 className="title">
+          <img src="/Logo.png" alt="Logo" className="login-logo" />
+          Login to CampusEventHub
+        </h2>
+        {/* this section of praveen kumar code is end here */}
+        
         <form onSubmit={handleSubmit} className="login-form">
           <input
             type="email"
