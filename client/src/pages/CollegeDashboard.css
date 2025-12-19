@@ -442,6 +442,223 @@
 
 /* ============================================ */
 /* this portion is done by praveen kumar */
+/* Very narrow desktop - prevent email/button overlap */
+/* ============================================ */
+
+@media (max-width: 1240px) and (min-width: 1201px) {
+    .user-box {
+        gap: 12px;
+        width: auto;
+        margin-left: auto;
+    }
+
+    .user-box span {
+        font-size: 13px;
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .logout-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .nav-links {
+        width: 42%;
+    }
+
+    .nav-link {
+        font-size: 14px;
+        padding: 8px 14px;
+    }
+}
+/* this section of praveen kumar code is end here */
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
+/* Narrow desktop/laptop widths */
+/* ============================================ */
+
+@media (max-width: 1200px) and (min-width: 1025px) {
+    .brand {
+        font-size: 20px;
+        margin: 0 0.5rem;
+    }
+
+    .brand-logo {
+        height: 24px;
+    }
+
+    .nav-links {
+        width: 40%;
+    }
+
+    .nav-link {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    .user-box {
+        gap: 15px;
+        width: auto;
+    }
+
+    .user-box span {
+        font-size: 14px;
+    }
+
+    .logout-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .page-container {
+        margin: 0 1.5rem;
+    }
+}
+/* this section of praveen kumar code is end here */
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
+/* Tablet Responsiveness - Hamburger Menu */
+/* ============================================ */
+
+@media (max-width: 1024px) {
+    /* Show hamburger menu on tablets */
+    .hamburger-icon {
+        display: block;
+        margin-left: auto;
+    }
+
+    .mobile-icons {
+        display: flex;
+    }
+
+    .mobile-notification {
+        display: block;
+        font-size: 20px;
+    }
+
+    /* Hide desktop nav-links and user-box */
+    .nav-links {
+        display: none;
+    }
+
+    .nav-links.nav-links-mobile-open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #6b4ce6;
+        width: 250px;
+        border-radius: 0 0 12px 12px;
+        padding: 1rem;
+        z-index: 1000;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        margin: 4px 0;
+    }
+
+    .mobile-logout {
+        display: block;
+        background-color: #f44336;
+        color: white;
+        margin-top: 8px;
+    }
+
+    .mobile-logout:hover {
+        background-color: #d32f2f !important;
+        box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .user-box {
+        display: none;
+    }
+
+    .brand {
+        width: auto;
+        font-size: 18px;
+        margin: 0 auto 0 0;
+    }
+
+    .brand-logo {
+        height: 26px;
+    }
+
+    .top-navbar {
+        flex-wrap: wrap;
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .dashboard-wrapper {
+        overflow-x: hidden;
+        width: 100%;
+        background: #f5f7fb;
+    }
+
+    .page-container {
+        margin: 0 2rem;
+        padding: 2rem;
+        box-sizing: border-box;
+        background: white;
+        border-radius: 12px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .upcoming-events-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .event-item-title {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        word-wrap: break-word;
+    }
+}
+/* this section of praveen kumar code is end here */
+
+/* Foldable devices */
+@media (max-width: 900px) and (min-width: 769px) {
+    .page-container {
+        margin: 0 1.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .event-item-title {
+        font-size: 1.1rem;
+        line-height: 1.4;
+    }
+}
+/* this section of praveen kumar code is end here */
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
 /* Mobile Responsiveness - Hamburger Menu */
 /* ============================================ */
 

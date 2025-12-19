@@ -235,6 +235,45 @@
 
 /* ============================================ */
 /* this portion is done by praveen kumar */
+/* Tablet Responsiveness */
+/* ============================================ */
+
+/* iPad Pro, Surface Pro, Foldable devices */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .fa-page {
+    overflow-x: hidden;
+  }
+
+  .fa-inner {
+    width: 85%;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    box-sizing: border-box;
+  }
+
+  .fa-stats-row {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .fa-card {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 250px;
+  }
+
+  .fa-middle-row {
+    flex-direction: column;
+  }
+
+  .fa-distribution-card,
+  .fa-recent-card {
+    width: 100%;
+  }
+}
+/* this section of praveen kumar code is end here */
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
 /* Mobile Responsiveness */
 /* ============================================ */
 

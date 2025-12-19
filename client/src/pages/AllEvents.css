@@ -330,6 +330,40 @@
 
 /* ============================================ */
 /* this portion is done by praveen kumar */
+/* Tablet Responsiveness */
+/* ============================================ */
+
+/* iPad Pro, Surface Pro, Foldable devices */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .ae-page {
+        overflow-x: hidden;
+    }
+
+    .ae-wrapper {
+        width: 92%;
+        box-sizing: border-box;
+    }
+
+    .ae-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .ae-event-title {
+        font-size: 1.1rem;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
+
+    .ae-event-desc {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+}
+/* this section of praveen kumar code is end here */
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
 /* Mobile Responsiveness */
 /* ============================================ */
 

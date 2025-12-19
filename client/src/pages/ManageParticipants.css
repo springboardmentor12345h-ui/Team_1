@@ -192,6 +192,38 @@
 
 /* ============================================ */
 /* this portion is done by praveen kumar */
+/* Tablet Responsiveness */
+/* ============================================ */
+
+/* iPad Pro, Surface Pro, Foldable devices */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .mp-page {
+    overflow-x: hidden;
+  }
+
+  .mp-wrapper {
+    width: 92%;
+    box-sizing: border-box;
+  }
+
+  .mp-title {
+    font-size: 1.8rem;
+  }
+
+  .mp-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .mp-table th,
+  .mp-table td {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+/* this section of praveen kumar code is end here */
+
+/* ============================================ */
+/* this portion is done by praveen kumar */
 /* Mobile Responsiveness */
 /* ============================================ */
 
