@@ -205,38 +205,6 @@
 
 /* Responsive */
 
-/* this portion is done by praveen kumar */
-/* Tablet devices - iPad Pro, Surface Pro */
-@media (max-width: 1024px) and (min-width: 901px) {
-  .ed-page {
-    overflow-x: hidden;
-  }
-
-  .ed-wrapper {
-    width: 92%;
-    box-sizing: border-box;
-  }
-
-  .ed-layout {
-    gap: 2rem;
-  }
-
-  .ed-event-title {
-    font-size: 2rem;
-    line-height: 1.3;
-  }
-
-  .ed-desc {
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-
-  .ed-info-item span:last-child {
-    font-size: 0.9rem;
-  }
-}
-/* this section of praveen kumar code is end here */
-
 @media (max-width: 900px) {
   .ed-layout {
     grid-template-columns: 1fr;

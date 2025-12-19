@@ -173,7 +173,12 @@
   opacity: 0.75;
 }
 
-/* ============================================ */\n/* this portion is done by praveen kumar */\n/* Tablet Responsiveness */\n/* ============================================ */\n\n/* iPad Pro, Surface Pro, Foldable devices */\n@media (max-width: 1024px) and (min-width: 769px) {\n  .ce-page {\n    overflow-x: hidden;\n  }\n\n  .ce-container {\n    width: 75%;\n    padding: 2.5rem;\n    box-sizing: border-box;\n  }\n\n  .backb-container {\n    width: 80%;\n  }\n\n  .ce-title {\n    font-size: 26px;\n  }\n\n  .ce-field label {\n    font-size: 13.5px;\n  }\n}\n/* this section of praveen kumar code is end here */\n\n/* ============================================ */\n/* this portion is done by praveen kumar */\n/* Mobile Responsiveness */\n/* ============================================ */\n\n@media (max-width: 768px) {
+/* ============================================ */
+/* this portion is done by praveen kumar */
+/* Mobile Responsiveness */
+/* ============================================ */
+
+@media (max-width: 768px) {
   .ce-page {
     padding: 20px 0;
   }
