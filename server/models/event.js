@@ -14,7 +14,18 @@ const eventSchema = new mongoose.Schema({
   image: String,
   requirements: String,
   tags: [String],
-  created_at: String
+
+  // 🔑 ownership field
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 export default mongoose.model("Event", eventSchema);

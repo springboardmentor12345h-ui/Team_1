@@ -1,3 +1,15 @@
+.ed-status-btn {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 1.2rem;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 1.3rem;
+  cursor: default;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
 /* Page background + centering */
 
 .ed-page {
@@ -19,7 +31,7 @@
 /* Back link */
 
 .ed-back-link {
-  background: white;
+  background: rgba(233, 232, 232, 0.467);
   border-radius: 20px;
   box-shadow: 0 18px 25px rgba(15, 23, 42, 0.12);
   font-size: 14px;
@@ -461,153 +473,167 @@
     color: #374151;
     border: 1px solid #d1d5db;
 }
-
-/* ============================================ */
-/* this portion is done by praveen kumar */
-/* Mobile Responsiveness */
-/* ============================================ */
-
-@media (max-width: 768px) {
-  .ed-page {
-    padding: 20px 0;
-  }
-
-  .ed-inner {
-    max-width: 95vw;
-    padding: 0 10px;
-  }
-
-  .ed-hero-card {
-    padding: 8px;
-    margin-bottom: 20px;
-  }
-
-  .ed-hero-image-wrapper {
-    height: 30vh;
-  }
-
-  .ed-hero-overlay {
-    padding: 15px 18px;
-  }
-
-  .ed-hero-title {
-    font-size: 20px;
-  }
-
-  .ed-hero-meta {
-    font-size: 12px;
-  }
-
-  .ed-hero-badge {
-    font-size: 11px;
-    padding: 3px 8px;
-  }
-
-  .ed-layout {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .ed-main {
-    width: 100%;
-  }
-
-  .ed-sidebar {
-    width: 100%;
-  }
-
-  .ed-card {
-    padding: 18px;
-  }
-
-  .ed-section-title {
-    font-size: 18px;
-  }
-
-  .ed-description,
-  .ed-requirements,
-  .ed-tags {
-    font-size: 14px;
-  }
-
-  .ed-info-row {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .ed-info-item {
-    width: 100%;
-  }
-
-  .ed-actions {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .ed-btn-primary,
-  .ed-btn-secondary {
-    width: 100%;
-    padding: 12px;
-  }
+.status-unregistered {
+    background: #e5e7eb;
+    color: #374151;
+    border: 1px solid #d1d5db;
 }
 
-@media (max-width: 480px) {
-  .ed-inner {
-    max-width: 98vw;
-    padding: 0 5px;
-  }
+/* =========================
+   DARK MODE OVERRIDES
+   ========================= */
 
-  .ed-hero-image-wrapper {
-    height: 25vh;
-  }
-
-  .ed-hero-title {
-    font-size: 18px;
-  }
-
-  .ed-hero-meta {
-    font-size: 11px;
-  }
-
-  .ed-card {
-    padding: 15px;
-    border-radius: 12px;
-  }
-
-  .ed-section-title {
-    font-size: 16px;
-  }
-
-  .ed-description,
-  .ed-requirements {
-    font-size: 13px;
-  }
-
-  .ed-info-label {
-    font-size: 12px;
-  }
-
-  .ed-info-value {
-    font-size: 14px;
-  }
-
-  .ed-btn-primary,
-  .ed-btn-secondary {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .ed-tag {
-    font-size: 11px;
-    padding: 4px 10px;
-  }
-
-  .status-approved,
-  .status-rejected,
-  .status-unregistered {
-    font-size: 12px;
-    padding: 4px 15px;
-  }
+/* Page background */
+html.dark-mode .ed-page {
+  background: #0f1115;
+  color: #ffffff;
 }
 
-/* this section of praveen kumar code is end here */
+/* Inner wrapper */
+html.dark-mode .ed-inner {
+  color: #ffffff;
+}
+
+/* Back link */
+html.dark-mode .ed-back-link {
+  background: #1a1d24;
+  color: #ffffff;
+  border-color: #2a2f3a;
+  box-shadow: 0 10px 22px rgba(255, 255, 255, 0.12);
+}
+
+html.dark-mode .ed-back-link:hover {
+  background: #ffffff;
+  color: #1a1d24;
+}
+
+/* Hero card */
+html.dark-mode .ed-hero-card {
+  background: #1a1d24;
+  box-shadow: 0 18px 45px rgba(255, 255, 255, 0.08);
+}
+
+/* Generic cards */
+html.dark-mode .ed-card {
+  background: #1a1d24;
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.10);
+}
+
+/* Titles & text */
+html.dark-mode .ed-section-title {
+  color: #ffffff;
+}
+
+html.dark-mode .ed-subtitle {
+  color: #c7c9d1;
+}
+
+html.dark-mode .ed-text,
+html.dark-mode .ed-text-small {
+  color: #e5e7eb;
+}
+
+/* Tags */
+html.dark-mode .ed-tag-pill {
+  background: #232734;
+  border-color: #2a2f3a;
+  color: #ffffff;
+}
+
+/* Progress bar */
+html.dark-mode .ed-progress {
+  background: #2a2f3a;
+}
+
+/* Modal */
+html.dark-mode .ed-modal {
+  background: #1a1d24;
+  color: #ffffff;
+}
+
+html.dark-mode .ed-modal h3 {
+  color: #ffffff;
+}
+
+html.dark-mode .ed-modal p {
+  color: #c7c9d1;
+}
+
+/* Modal buttons */
+html.dark-mode .ed-cancel-btn {
+  background: #232734;
+  color: #ffffff;
+}
+
+html.dark-mode .ed-cancel-btn:hover {
+  background: #1a1d24;
+}
+
+html.dark-mode .ed-confirm-delete-btn {
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.15);
+}
+
+/* Feedback input */
+html.dark-mode .ed-feedback-input {
+  background: #0f1115;
+  color: #ffffff;
+  border-color: #2a2f3a;
+}
+
+/* Status buttons */
+html.dark-mode .status-pending {
+  background: #78350f;
+  color: #ffffff;
+  border-color: #ca8a04;
+}
+
+html.dark-mode .status-approved {
+  background: #065f46;
+  color: #ffffff;
+  border-color: #047857;
+}
+
+html.dark-mode .status-rejected {
+  background: #7f1d1d;
+  color: #ffffff;
+  border-color: #b91c1c;
+}
+
+html.dark-mode .status-unregistered {
+  background: #232734;
+  color: #ffffff;
+  border-color: #2a2f3a;
+}
+
+/* Normalize all shadows to white in dark mode */
+html.dark-mode .ed-hero-card,
+html.dark-mode .ed-card,
+html.dark-mode .ed-back-link,
+html.dark-mode .ed-modal,
+html.dark-mode .ed-confirm-delete-btn,
+html.dark-mode .ed-register-btn,
+html.dark-mode .ed-feedback-btn,
+html.dark-mode .ed-status-btn {
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.12);
+  border:0.1px solid white;
+}
+
+/* Hover text color fix for dark mode */
+html.dark-mode .ed-back-link:hover {
+    color: #000000 !important;
+}
+/* Dark mode: stars always visible */
+
+/* FORCE FIX: stars in dark mode */
+html.dark-mode .ed-star {
+  color: #fbbf24 !important;
+}
+
+html.dark-mode .ed-star:hover,
+html.dark-mode .ed-star.active {
+  color: #facc15 !important;
+}
+/* RETRY: hard guarantee for active stars in dark mode */
+html.dark-mode .ed-stars-row span.ed-star.active {
+  color: #facc15 !important;
+}

@@ -8,8 +8,14 @@ Prereqs: Node.js 18+ and npm installed.
 PORT=5000
 MONGO_URI=mongodb+srv://<user>:<pass>@<cluster>/<db>?retryWrites=true&w=majority
 JWT_SECRET=<any-random-string>
+
+# Cloudinary Configuration (for event image uploads)
+CLOUDINARY_NAME=<your-cloud-name>
+CLOUDINARY_KEY=<your-api-key>
+CLOUDINARY_SECRET=<your-api-secret>
 ```
 - In MongoDB Atlas, allow your current IP in Project → Network Access.
+- Get Cloudinary credentials from https://cloudinary.com/console (Dashboard section)
 
 2) Install deps
 ```bash

@@ -10,51 +10,82 @@ const EventDetails = () => {
   const fromStudent = location.state?.from === "student";
 
   const [event, setEvent] = useState(null);
-  const [showDelete, setShowDelete] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [regStatus, setRegStatus] = useState(null);
-  const [hasFeedback, setHasFeedback] = useState(false);
+const [hasFeedback, setHasFeedback] = useState(false);
+const [apiError, setApiError] = useState(false);
+const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/events/${id}`)
-      .then(res => res.json())
-      .then(data => setEvent(data));
+useEffect(() => {
+  const loadDetails = async () => {
+    try {
+      setLoading(true);
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      fetch(`http://localhost:5000/registrations`)
-        .then(res => res.json())
-        .then(all => {
-          const match = all.find(
-            r => r.userId?._id === user._id && r.eventId?._id === id
-          );
-          if (match) setRegStatus(match.status);
-        });
-      // Feedback check block
-      fetch(`http://localhost:5000/api/feedback/event/${id}`)
-        .then(res => res.json())
-        .then(list => {
-          const fbList = Array.isArray(list) ? list : list.data || [];
-          const exists = fbList.some(fb => fb.user_id === user._id || fb.user_id?._id === user._id);
-          setHasFeedback(exists);
-        })
-        .catch(err => console.error("Feedback check error:", err));
+      const eventRes = await fetch(`http://localhost:5000/events/${id}`);
+      if (!eventRes.ok) throw new Error("Event API down");
+      const data = await eventRes.json();
+      setEvent(data);
+
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user && data.createdBy && data.createdBy === user._id) {
+        setCanDelete(true);
+      } else {
+        setCanDelete(false);
+      }
+
+      if (user) {
+        const regRes = await fetch(`http://localhost:5000/registrations`);
+        if (!regRes.ok) throw new Error("Registrations API down");
+        const all = await regRes.json();
+        const match = all.find(
+          r => r.userId?._id === user._id && r.eventId?._id === id
+        );
+        if (match) setRegStatus(match.status);
+
+        const fbRes = await fetch(
+          `http://localhost:5000/api/feedback/event/${id}`
+        );
+        if (!fbRes.ok) throw new Error("Feedback API down");
+        const list = await fbRes.json();
+        const fbList = Array.isArray(list) ? list : list.data || [];
+        const exists = fbList.some(
+          fb => fb.user_id === user._id || fb.user_id?._id === user._id
+        );
+        setHasFeedback(exists);
+      }
+
+      setApiError(false);
+    } catch (err) {
+      console.error("Backend not reachable", err);
+      setApiError(true);
+    } finally {
+      setLoading(false);
     }
-  }, [id]);
+  };
 
-  if (!event) {
-    return (
-      <div className="ed-page">
-        <div className="ed-inner">
-          <div className="ed-card ed-empty-card">
-            <h2>Loading...</h2>
-          </div>
+  loadDetails();
+}, [id]);
+
+if (loading) {
+  return (
+    <div className="ed-page">
+      <div className="ed-inner">
+        <div className="ed-card ed-empty-card">
+          <h2>Loading...</h2>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
+if (apiError) {
+  navigate("/error", { replace: true });
+  return null;
+}
 
   const start = new Date(event.start_date);
   const end = new Date(event.end_date);
@@ -79,9 +110,25 @@ const EventDetails = () => {
     (event.registered_count / event.max_participants) * 100;
 
   const handleDelete = async () => {
-    await fetch(`http://localhost:5000/events/${id}`, {
-      method: "DELETE"
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      alert("Unauthorized");
+      return;
+    }
+
+    const res = await fetch(`http://localhost:5000/events/${id}`, {
+      method: "DELETE",
+      headers: {
+        "x-user-id": user._id
+      }
     });
+
+    if (!res.ok) {
+      alert("Failed to delete event");
+      return;
+    }
+
     navigate("/all-events");
   };
 
@@ -167,8 +214,11 @@ const EventDetails = () => {
             ← Back to All Events
           </button>
 
-          {!fromStudent && (
-            <button className="ed-delete-btn" onClick={() => setShowDelete(true)}>
+          {!fromStudent && canDelete && (
+            <button
+              className="ed-delete-btn"
+              onClick={() => setShowDeleteModal(true)}
+            >
               Delete Event
             </button>
           )}
@@ -283,7 +333,7 @@ const EventDetails = () => {
             )}
           </aside>
         </div>
-        {showDelete && (
+        {showDeleteModal && (
           <div className="ed-modal-overlay">
             <div className="ed-modal">
               <h3>Delete This Event?</h3>
@@ -292,7 +342,7 @@ const EventDetails = () => {
               <div className="ed-modal-actions">
                 <button
                   className="ed-cancel-btn"
-                  onClick={() => setShowDelete(false)}
+                  onClick={() => setShowDeleteModal(false)}
                 >
                   Cancel
                 </button>

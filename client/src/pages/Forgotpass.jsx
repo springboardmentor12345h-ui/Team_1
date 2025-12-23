@@ -14,12 +14,7 @@ export default function ForgotPass() {
   return (
     <div className="forgotpass-container">
       <div className="forgotpass-card">
-        {/* this portion is done by praveen kumar */}
-        <h2 className="forgotpass-title">
-          <img src="/Logo.png" alt="Logo" className="login-logo" />
-          Reset Password
-        </h2>
-        {/* this section of praveen kumar code is end here */}
+        <h2 className="forgotpass-title">Reset Password</h2>
 
         <form onSubmit={handleSubmit} className="forgotpass-form">
           <input

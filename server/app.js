@@ -11,6 +11,7 @@ import authRoutes from "./routes/auth.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
 import feedbackRoutes from "./routes/feedbackRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 
 const app = express();
 
@@ -18,6 +19,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 
 // Database
 connectDB();
@@ -27,6 +32,7 @@ app.use("/auth", authRoutes);
 app.use("/events", eventRoutes);
 app.use("/registrations", registrationRoutes);
 app.use("/api/feedback", feedbackRoutes);
+app.use("/notifications", notificationRoutes);
 
 // Server
 app.listen(5000, () => {

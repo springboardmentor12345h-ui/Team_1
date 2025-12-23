@@ -1,22 +1,22 @@
 .mp-page {
     font-family: system-ui, sans-serif;
     background: #f8fafc;
-    min-height: 100vh;
+    min-height: 90vh;
     font-family: 'kanit';
     width: 100%;
     display: flex;
     justify-content: center;
+    overflow-x: hidden;
 }
 
 .mp-inner {
     width: 80%;
     margin:3rem 4rem 4rem 4rem;
     padding:3rem;
-    height: fit-content;
+    min-height:20%;
     background: white;
     border-radius: 20px;
     box-shadow: 0 18px 45px rgba(15, 23, 42, 0.22);
-
 }
 
 /* Title */
@@ -84,7 +84,9 @@
     border-radius: 12px;
     border-collapse: collapse;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .mp-table thead {
@@ -190,15 +192,21 @@
     background: #dc2626;
 }
 
-/* ============================================ */
-/* this portion is done by praveen kumar */
-/* Mobile Responsiveness */
-/* ============================================ */
+.mp-no-results{
+    display: flex;
+    align-items:flex-end;
+    justify-content: flex-end;
+    width:100%;
+}
+.resholder{
+    width:100%;
+}
 
-@media (max-width: 768px) {
+
+@media (max-width: 1024px) {
     .mp-inner {
         width: 90%;
-        margin: 2rem 1rem;
+        margin: 2rem auto;
         padding: 2rem;
     }
 
@@ -209,104 +217,45 @@
     .mp-subtitle {
         font-size: 14px;
     }
+}
 
+@media (max-width: 768px) {
     .mp-filters-row {
         flex-direction: column;
-        gap: 12px;
+        align-items: stretch;
+        gap: 14px;
     }
 
     .mp-filter-select,
     .mp-search,
     .mp-export-btn {
-        width: 100%;
-    }
-
-    /* Make table responsive - card layout on mobile */
-    .mp-table {
-        display: block;
-        overflow-x: auto;
-    }
-
-    .mp-table thead {
-        display: none;
-    }
-
-    .mp-table tbody {
-        display: block;
-    }
-
-    .mp-table tr {
-        display: block;
-        margin-bottom: 20px;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 15px;
-        background: white;
-    }
-
-    .mp-table td {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        border-bottom: 1px solid #f1f5f9;
-    }
-
-    .mp-table td:last-child {
-        border-bottom: none;
-    }
-
-    .mp-table td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        color: #475569;
-        margin-right: 10px;
-    }
-
-    .mp-actions {
-        justify-content: flex-end;
         width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     .mp-inner {
-        width: 95%;
-        margin: 1rem 0.5rem;
+        width: 94%;
         padding: 1.5rem;
+        border-radius: 16px;
     }
 
     .mp-title {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .mp-subtitle {
         font-size: 13px;
-        margin-bottom: 20px;
     }
 
-    .mp-filter-select,
-    .mp-search,
-    .mp-export-btn {
-        font-size: 13px;
-        padding: 8px 12px;
-    }
-
+    .mp-table th,
     .mp-table td {
+        padding: 14px;
         font-size: 13px;
-        padding: 8px 0;
     }
 
-    .mp-student-name {
-        font-size: 14px;
-    }
-
-    .mp-student-email {
-        font-size: 11px;
-    }
-
-    .mp-status {
-        font-size: 11px;
-        padding: 4px 10px;
+    .mp-actions {
+        gap: 6px;
     }
 
     .mp-approve-btn,
@@ -317,4 +266,134 @@
     }
 }
 
-/* this section of praveen kumar code is end here */
+/* =========================
+   DARK MODE OVERRIDES
+   ========================= */
+
+/* Fix background bleed outside mp-page */
+html.dark-mode body {
+    background: #0f1115;
+}
+
+/* Ensure full-width wrapper stays dark */
+html.dark-mode .mp-page {
+    background: #0f1115;
+    color: #ffffff;
+}
+
+/* Main container */
+html.dark-mode .mp-inner {
+    background: #1a1d24;
+    box-shadow: 0 18px 45px rgba(255, 255, 255, 0.244);
+    border:1px solid white;
+}
+
+/* Titles */
+html.dark-mode .mp-title {
+    color: #ffffff;
+}
+
+html.dark-mode .mp-subtitle {
+    color: #c7c9d1;
+}
+
+/* Filters row */
+html.dark-mode .mp-filters-row {
+    background: #1a1d24;
+}
+
+/* Select & search */
+html.dark-mode .mp-filter-select,
+html.dark-mode .mp-search {
+    background: #0f1115;
+    color: #ffffff;
+    border-color: #2a2f3a;
+}
+
+/* Export button */
+html.dark-mode .mp-export-btn {
+    background: #1a1d24;
+    color: #ffffff;
+    border-color: #2a2f3a;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.12);
+}
+
+html.dark-mode .mp-export-btn:hover {
+    background: #232734;
+}
+
+/* Table */
+html.dark-mode .mp-table {
+    background: #1a1d24;
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.08);
+}
+
+html.dark-mode .mp-table thead {
+    background: #232734;
+}
+
+html.dark-mode .mp-table th {
+    color: #ffffff;
+    border-bottom-color: #2a2f3a;
+}
+
+html.dark-mode .mp-table td {
+    color: #ffffff;
+    border-bottom-color: #2a2f3a;
+}
+
+/* Student info */
+html.dark-mode .mp-student-name {
+    color: #ffffff;
+}
+
+html.dark-mode .mp-student-email {
+    color: #c7c9d1;
+}
+
+/* Status badges */
+html.dark-mode .mp-status-approved {
+    background: #065f46;
+    color: #ffffff;
+    border-color: #047857;
+}
+
+html.dark-mode .mp-status-pending {
+    background: #78350f;
+    color: #ffffff;
+    border-color: #ca8a04;
+}
+
+html.dark-mode .mp-status-rejected {
+    background: #7f1d1d;
+    color: #ffffff;
+    border-color: #b91c1c;
+}
+
+/* Action buttons */
+html.dark-mode .mp-approve-btn {
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.15);
+}
+
+html.dark-mode .mp-reject-btn {
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.15);
+}
+
+html.dark-mode .mp-approve-btn:hover,
+html.dark-mode .mp-reject-btn:hover {
+    box-shadow: none;
+}
+
+@media (min-width: 900px) {
+    .mp-inner {
+        width: 85%;
+        margin: 3rem auto;
+        padding: 3rem 4rem;
+    }
+
+    .mp-table {
+        display: table;
+        width: 100%;
+        table-layout: auto;
+    }
+}

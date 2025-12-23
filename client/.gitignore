@@ -1,10 +1,16 @@
 # Dependencies
 node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.pnp
+.pnp.js
 
-# Builds
+# Build outputs
 dist/
 dist-ssr/
 build/
+*.local
 
 # Logs
 logs/
@@ -17,20 +23,29 @@ lerna-debug.log*
 
 # Environment files
 .env
-.env.local
-.env.development.local
-.env.production.local
-.env.test.local
+.env.*
+!.env.example
 
-# Editor settings
-.vscode/*
-!.vscode/extensions.json
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# Cache
+.cache/
+.vite/
+.eslintcache
+.stylelintcache
+
+# Editor & OS
+.vscode/
 .idea/
 .DS_Store
-
-# Misc
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*.sw?
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?

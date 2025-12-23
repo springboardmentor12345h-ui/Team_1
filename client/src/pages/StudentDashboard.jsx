@@ -1,86 +1,255 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import './StudentDashboard.css'
-import { useState, useEffect } from "react";
+import StudentChatbot from "../components/StudentChatbot";
+import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-/* this portion is done by praveen kumar */
-import { faBell, faBars, faTimes } from '@fortawesome/free-solid-svg-icons'; /* edited by praveen kumar */
-/* this section of praveen kumar code is end here */
+import { faBell, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 export function StudentDashboardNavbar() {
   const navigate = useNavigate();
-  /* this portion is done by praveen kumar */
-  const [menuOpen, setMenuOpen] = useState(false);
-  /* this section of praveen kumar code is end here */
+  const location = useLocation();
+  const isActive = (path) => location.pathname.startsWith(path);
+  const [showNotifications, setShowNotifications] = React.useState(false);
+  const [notifications, setNotifications] = React.useState([]);
+  const [loadingNotifications, setLoadingNotifications] = React.useState(false);
+  const [isDarkMode, setIsDarkMode] = React.useState(
+    localStorage.getItem("theme") === "dark"
+  );
+
+  const hasUnread = notifications.some(n => n.isRead === false);
 
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
 
-  return (
-    <div className="top-navbar">
-      {/* this portion is done by praveen kumar */}
-      <div className="brand">
-        <img src="/Logo.png" alt="Logo" className="brand-logo" />
-        CampusEventHub
-      </div>
-      {/* this section of praveen kumar code is end here */}
+  const fetchNotifications = async () => {
+    try {
+      setLoadingNotifications(true);
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user?._id) return;
 
-      {/* this portion is done by praveen kumar */}
-      {/* Mobile Icons - Notification and Hamburger Menu */}
-      <div className="mobile-icons">
-        <FontAwesomeIcon icon={faBell} className="notificationicon mobile-notification" />
-        <div className="hamburger-icon" onClick={() => setMenuOpen(!menuOpen)}>
-          <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+      const res = await fetch(`http://localhost:5000/notifications/${user._id}`);
+      const data = await res.json();
+      setNotifications(data || []);
+    } catch (err) {
+      console.error("Failed to fetch notifications", err);
+    } finally {
+      setLoadingNotifications(false);
+    }
+  };
+
+  const markAllAsRead = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user?._id) return;
+
+      await fetch(`http://localhost:5000/notifications/mark-all-read/${user._id}`, {
+        method: "PATCH",
+      });
+
+      // update local state instantly
+      setNotifications((prev) =>
+        prev.map((n) => ({ ...n, isRead: true }))
+      );
+    } catch (err) {
+      console.error("Failed to mark all notifications as read", err);
+    }
+  };
+
+  React.useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        setShowNotifications(false);
+      }
+    };
+
+    if (showNotifications) {
+      document.addEventListener("keydown", handleEsc);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, [showNotifications]);
+
+  React.useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user?._id) return;
+
+    fetchNotifications(); // initial fetch
+
+    const interval = setInterval(() => {
+      fetchNotifications();
+    }, 15000); // 15 seconds polling
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const toggleTheme = () => {
+    const root = document.documentElement;
+    const isDark = root.classList.toggle("dark-mode");
+    setIsDarkMode(isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  };
+
+  React.useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark-mode");
+      setIsDarkMode(true);
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+      setIsDarkMode(false);
+    }
+  }, []);
+
+  return (
+    <>
+      <div id="top-navbar">
+        <div className="brandlogo">
+          <div className="logo-wrapper1">
+            <img
+              src={logo}
+              alt="CampusEventHub Logo"
+              className="dashlogo1"
+            />
+          </div>
+          <div id="brand">CampusEventHub</div></div>
+
+        <div id="nav-links">
+          <a
+            className={isActive("/student-dashboard") && !isActive("/student-dashboard/all-events") ? "nav-link active" : "nav-link"}
+            onClick={() => navigate("/student-dashboard")}
+          >
+            Dashboard
+          </a>
+
+          <a
+            className={isActive("/student-dashboard/all-events") ? "nav-link active" : "nav-link"}
+            onClick={() => navigate("/student-dashboard/all-events")}
+          >
+            All Events
+          </a>
+        </div>
+
+        <div id="user-box">
+          <span>{JSON.parse(localStorage.getItem("user"))?.email || "User"}</span>
+
+          <FontAwesomeIcon
+            icon={isDarkMode ? faSun : faMoon}
+            className="theme-toggle-icon"
+            onClick={toggleTheme}
+            title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          />
+
+          <div className="notification-bell-wrapper">
+            <FontAwesomeIcon
+              icon={faBell}
+              className="notificationicon"
+              onClick={() => {
+                setShowNotifications(prev => !prev);
+                fetchNotifications();
+              }}
+            />
+            {hasUnread && <span className="notification-dot"></span>}
+          </div>
+          <button id="logout-btn" onClick={handleLogout}>Logout</button>
         </div>
       </div>
-      {/* this section of praveen kumar code is end here */}
+      {showNotifications && (
+        <div
+          className="notification-overlay"
+          onClick={() => setShowNotifications(false)}
+        >
+          <div
+            className="notification-panel"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="notification-close"
+              onClick={() => setShowNotifications(false)}
+            >
+              ✕
+            </button>
+            <h3>Notifications</h3>
+            {loadingNotifications && <p>Loading...</p>}
 
-      {/* this portion is done by praveen kumar */}
-      <div className={`nav-links ${menuOpen ? "nav-links-mobile-open" : ""}`}>
-      {/* this section of praveen kumar code is end here */}
-        <a className="nav-active" onClick={() => navigate("/student-dashboard")}>
-          Dashboard
-        </a>
+            {!loadingNotifications && notifications.length === 0 && (
+              <p>No notifications yet.</p>
+            )}
 
-        <a onClick={() => navigate("/student-dashboard/all-events")}>
-          All Events
-        </a>
-        
-        {/* this portion is done by praveen kumar */}
-        {/* Logout option for mobile menu */}
-        <a className="mobile-logout" onClick={handleLogout}>
-          Logout
-        </a>
-        {/* this section of praveen kumar code is end here */}
-      </div>
+            {!loadingNotifications &&
+              notifications.map((n) => (
+                <div key={n._id} className={`notification-item ${n.type}`}>
+                  <strong>{n.type?.toUpperCase()}</strong>
 
-      <div className="user-box">
-        <span>{JSON.parse(localStorage.getItem("user"))?.email || "User"}</span>
-        <FontAwesomeIcon icon={faBell} className="notificationicon" />
-        <button className="logout-btn" onClick={handleLogout}>Logout</button>
-      </div>
-    </div>
+                  {n.eventId?.title && (
+                    <span className="notification-event">
+                      {n.eventId.title}
+                    </span>
+                  )}
+
+                  <p>{n.message}</p>
+                  <small>{new Date(n.createdAt).toLocaleString()}</small>
+                </div>
+              ))
+            }
+            {notifications.length > 0 && (
+              <button
+                className="notification-mark-all"
+                onClick={markAllAsRead}
+              >
+                Mark all as read
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 export default function StudentDashboard() {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [registrations, setRegistrations] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:5000/events")
-      .then(res => res.json())
-      .then(data => setEvents(data));
+  const [apiError, setApiError] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user?._id) {
-      fetch(`http://localhost:5000/registrations?userId=${user._id}`)
-        .then(res => res.json())
-        .then(data => {
-          const filtered = data.filter(r => r.userId?._id === user._id);
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+
+        const eventsRes = await fetch("http://localhost:5000/events");
+        if (!eventsRes.ok) throw new Error("Events API down");
+        const eventsData = await eventsRes.json();
+        setEvents(eventsData);
+
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user?._id) {
+          const regRes = await fetch(
+            `http://localhost:5000/registrations?userId=${user._id}`
+          );
+          if (!regRes.ok) throw new Error("Registrations API down");
+          const regData = await regRes.json();
+          const filtered = regData.filter(
+            (r) => r.userId?._id === user._id
+          );
           setRegistrations(filtered);
-        });
-    }
+        }
+
+        setApiError(false);
+      } catch (err) {
+        console.error("Backend not reachable", err);
+        setApiError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
   }, []);
   React.useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -98,107 +267,115 @@ export default function StudentDashboard() {
     );
     return reg ? reg.status : "Unregistered";
   };
+  if (loading) {
+    return null;
+  }
+
+  if (apiError) {
+    navigate("/error", { replace: true });
+    return null;
+  }
   return (
-    <div className="dashboard-wrapper">
+    <div id="dashboard-wrapper">
 
       {/* MAIN CONTENT */}
-      <div className="page-container">
-        
-        <h1 className="page-title">Student Dashboard</h1>
-        <p className="page-sub">Welcome back! Here are your events. </p>
+      <div id="page-container">
+
+        <h1 id="page-title">Student Dashboard</h1>
+        <p id="page-sub">Welcome back! Here are your events. </p>
 
         {/* STAT CARDS */}
-        <div className="stats-grid">
+        <div id="stats-grid">
 
-          <div className="stat-card">
-            <p className="stat-label">Registered Events</p>
-            <p className="stat-number">{registrations.length}</p>
+          <div id="stat-card">
+            <p id="stat-label">Registered Events</p>
+            <p id="stat-number">{registrations.length}</p>
           </div>
 
-          <div className="stat-card">
-            <p className="stat-label">Approved</p>
-            <p className="stat-number">
+          <div id="stat-card">
+            <p id="stat-label">Approved</p>
+            <p id="stat-number">
               {registrations.filter(r => r.status === "Approved").length}
             </p>
           </div>
 
-          <div className="stat-card">
-            <p className="stat-label">Pending</p>
-            <p className="stat-number">
+          <div id="stat-card">
+            <p id="stat-label">Pending</p>
+            <p id="stat-number">
               {registrations.filter(r => r.status === "Pending").length}
             </p>
           </div>
 
-          <div className="stat-card">
-            <p className="stat-label">Rejected</p>
-            <p className="stat-number">
+          <div id="stat-card">
+            <p id="stat-label">Rejected</p>
+            <p id="stat-number">
               {registrations.filter(r => r.status === "Rejected").length}
             </p>
           </div>
 
-          <div className="stat-card">
-            <p className="stat-label">Upcoming Events</p>
-            <p className="stat-number">
+          <div id="stat-card">
+            <p id="stat-label">Upcoming Events</p>
+            <p id="stat-number">
               {events.filter(e => !e.completed).length}
             </p>
           </div>
 
-          <div className="stat-card">
-            <p className="stat-label">Total Events Available</p>
-            <p className="stat-number">{events.length}</p>
+          <div id="stat-card">
+            <p id="stat-label">Total Events Available</p>
+            <p id="stat-number">{events.length}</p>
           </div>
 
         </div>
 
-      {/* UPCOMING EVENTS */}
-        <div className="upcoming-events-title">Upcoming Events</div>
+        {/* UPCOMING EVENTS */}
+        <div id="upcoming-events-title">Upcoming Events</div>
         <div
-          className="view-all-btn"
+          id="view-all-btn"
           onClick={() => navigate("/student-dashboard/all-events")}
         >
           View All →
         </div>
 
-        <div className="upcoming-events-container">
+        <div id="upcoming-events-container">
           {events.slice(0, 6).map((event) => (
-            <div className="event-item" key={event._id}>
-              <div className="event-item-split">
+            <div id="event-item" key={event._id}>
+              <div id="event-item-split">
 
-                <div className="event-item-image">
+                <div id="event-item-image">
                   <img
                     src={event.banner || event.image}
                     alt={event.title}
-                    className="event-img"
+                    id="event-img"
                   />
                 </div>
 
-                <div className="event-item-info">
-                  <div className="float-right">
-                    <span className="event-category-badge">{event.category}</span>
+                <div id="event-item-info">
+                  <div id="float-right">
+                    <span id="event-category-badge">{event.category}</span>
                     {(() => {
-                        const st = getStatusForEvent(event._id);
-                        return (
-                          <span className={`event-status-user status-${st.toLowerCase()}`}>
-                            {st}
-                          </span>
-                        );
+                      const st = getStatusForEvent(event._id);
+                      return (
+                        <span id="event-status-user" className={`status-${st.toLowerCase()}`}>
+                          {st}
+                        </span>
+                      );
                     })()}
-                    
+
                   </div>
-                  <span className="event-item-title">{event.title}</span>
-                  <div className="event-item-meta">
-                    <p className="event-location-text">{event.location}</p>
+                  <span id="event-item-title">{event.title}</span>
+                  <div id="event-item-meta">
+                    <p id="event-location-text">{event.location}</p>
                   </div>
                   <div className="btn-cnt"><button
-                      className="event-details-btn"
-                      onClick={() =>
-                        navigate(`/student-dashboard/all-events/event/${event._id}`, {
-                          state: { from: "student" }
-                        })
-                      }
-                    >
-                      View Details
-                    </button></div>
+                    id="event-details-btn"
+                    onClick={() =>
+                      navigate(`/student-dashboard/all-events/event/${event._id}`, {
+                        state: { from: "student" }
+                      })
+                    }
+                  >
+                    View Details
+                  </button></div>
                 </div>
 
               </div>

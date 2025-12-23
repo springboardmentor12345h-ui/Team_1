@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./FeedbackAnalysis.css";
+import Lottie from "lottie-react";
+import noresultsAnimation from "../assets/noresults.json";
 
 export default function FeedbackAnalysis() {
   const [events, setEvents] = useState([]);
@@ -11,6 +14,10 @@ export default function FeedbackAnalysis() {
   const [recentFeedback, setRecentFeedback] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [apiError, setApiError] = useState(false);
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
 
   // 1) Load list of events to populate the select box
   const fetchEvents = async () => {
@@ -19,25 +26,37 @@ export default function FeedbackAnalysis() {
       const res = await fetch("http://localhost:5000/events");
       if (!res.ok) throw new Error("Failed to load events");
       const data = await res.json();
-      setEvents(Array.isArray(data) ? data : data.data || []);
+      const allEvents = Array.isArray(data) ? data : data.data || [];
+      if (user) {
+        const myEvents = allEvents.filter(
+          (e) => e.createdBy === user._id
+        );
+        setEvents(myEvents);
+      } else {
+        setEvents([]);
+      }
     } catch (e) {
       console.error("fetchEvents:", e);
-      setError("Unable to load events");
+      setApiError(true);
     }
   };
 
   const calculateSentiment = (dist) => {
     const total = dist.reduce((acc, r) => acc + r.count, 0);
     if (!total) return "Neutral";
-    const high = dist.filter(r => r.stars >= 4).reduce((a,b)=>a+b.count,0);
+    const high = dist.filter(r => r.stars >= 3).reduce((a,b)=>a+b.count,0);
     const low  = dist.filter(r => r.stars <= 2).reduce((a,b)=>a+b.count,0);
-    if (high / total >= 0.6) return "Positive";
+    if (high / total >= 0.3) return "Positive";
     if (low / total >= 0.6)  return "Negative";
     return "Neutral";
   };
 
   // 2) Load feedback summary + list for a given eventId
   const loadData = async (id) => {
+    if (user && events.length && !events.find(e => (e._id || e.id) === id)) {
+      setError("You are not allowed to view feedback for this event");
+      return;
+    }
     if (!id) return;
     setLoading(true);
     setError(null);
@@ -68,7 +87,7 @@ export default function FeedbackAnalysis() {
       setSentiment(calculateSentiment(dist));
     } catch (e) {
       console.error("loadData:", e);
-      setError("Unable to load feedback for event");
+      setApiError(true);
     }
 
     setLoading(false);
@@ -85,20 +104,25 @@ export default function FeedbackAnalysis() {
     loadData(eventId);
   }, [eventId]);
 
+  if (apiError) {
+    navigate("/error", { replace: true });
+    return null;
+  }
+
   return (
     <div className="fa-page">
       <div className="fa-inner">
         <h1 className="fa-title">Feedback Analytics</h1>
         <p className="fa-subtitle">Analyze event ratings and comments</p>
 
-        <div style={{ marginTop: 20, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+        <div style={{ marginTop: 20, display: "flex", alignItems: "center" }} className="int-buttons">
           <select
             value={eventId}
             onChange={(e) => setEventId(e.target.value)}
             className="fa-input"
-            style={{ padding: 10, borderRadius: 6, minWidth: "200px" }}
+            style={{ padding: 10, borderRadius: 6 }}
           >
-            <option value="">Select event</option>
+            <option value="" className="">Select event</option>
             {events.map(ev => (
               <option key={ev._id || ev.id} value={ev._id || ev.id}>
                 {ev.title || ev.name || ev.eventName || ev.nameOfEvent || (ev._id || ev.id)}
@@ -113,13 +137,17 @@ export default function FeedbackAnalysis() {
         <div className="fa-stats-row">
           <div className="fa-card fa-rating-card">
             <h3>Average Rating</h3>
-            <div className="fa-rating-value">{Number(averageRating).toFixed(2)}</div>
+            <div className="fa-rating-value">
+              {Number(averageRating) === 0 ? "No rating yet" : Number(averageRating).toFixed(2)}
+            </div>
             <p className="fa-rating-based">Based on {totalFeedback} reviews</p>
           </div>
 
           <div className="fa-card fa-feedback-count">
             <h3>Total Feedback</h3>
-            <div className="fa-feedback-value">{totalFeedback}</div>
+            <div className="fa-feedback-value">
+              {Number(totalFeedback) === 0 ? "No feedback yet" : totalFeedback}
+            </div>
             <p className="fa-feedback-change">Live from DB</p>
           </div>
 
@@ -139,14 +167,15 @@ export default function FeedbackAnalysis() {
           <div className="fa-card fa-distribution-card">
             <h3>Rating Distribution</h3>
             <div className="fa-distribution-list">
-              {ratingDistribution.map((r) => (
-                <div className="fa-distribution-item" key={r.stars}>
-                  <span className="fa-star-label">{r.stars} ★</span>
-                  <div className="fa-bar-bg">
-                    <div className="fa-bar-fill" style={{ width: `${(r.count || 0) * 20}%` }} />
+              {(eventId && ratingDistribution.length > 0 ? ratingDistribution : [5,4,3,2,1].map(star => ({ stars: star, count: 0 })))
+                .map((r) => (
+                  <div className="fa-distribution-item" key={r.stars}>
+                    <span className="fa-star-label">{r.stars} ★</span>
+                    <div className="fa-bar-bg">
+                      <div className="fa-bar-fill" style={{ width: `${(r.count || 0) * 20}%` }} />
+                    </div>
+                    <span className="fa-bar-count">{r.count || 0}</span>
                   </div>
-                  <span className="fa-bar-count">{r.count}</span>
-                </div>
               ))}
             </div>
           </div>
@@ -156,7 +185,17 @@ export default function FeedbackAnalysis() {
 
             <div className="fa-recent-list">
               {loading && <p>Loading...</p>}
-              {!loading && recentFeedback.length === 0 && <p>No feedback yet.</p>}
+
+              {!loading && recentFeedback.length === 0 && (
+                <div className="fa-no-recent">
+                  <Lottie
+                    animationData={noresultsAnimation}
+                    loop={true}
+                    className="svgres"
+                  />
+                  <p>No feedback yet.</p>
+                </div>
+              )}
 
               {recentFeedback.map((f, idx) => (
                 <div className="fa-recent-item" key={f._id || idx}>

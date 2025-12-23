@@ -1,0 +1,69 @@
+/* Isolate error page from global theme (dark/light mode) */
+.error-page {
+    all: unset;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    font-family: system-ui, sans-serif;
+}
+
+.error-card {
+    width: 90%;
+    height: 80%;
+    padding: 40px 30px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+}
+
+.error-animation {
+    min-width:35%;
+}
+
+.error-title {
+    font-family: 'kanit';
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.error-text {
+    font-size: 14px;
+    color: #000000;
+    line-height: 1.6;
+    font-family: 'kanit';
+    margin-bottom: 28px;
+    max-width: 320px;
+}
+
+.error-btn {
+    margin-top:2rem;
+    font-family: 'kanit';
+    padding: 12px 28px;
+    border-radius: 2rem;
+    border: none;
+    font-size: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(90deg, #7b5cff, #4b64f2);
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.error-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(75, 100, 242, 0.35);
+}
+
+.dark .error-page *,
+.light .error-page * {
+    color: #000000;
+}

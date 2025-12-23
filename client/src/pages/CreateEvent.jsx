@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./CreateEvent.css";
 import { useNavigate } from "react-router-dom";
 import calendarIcon from "../assets/calendr.svg";
@@ -8,6 +8,9 @@ export default function CreateEvent() {
 
   const startInput = useRef(null);
   const endInput = useRef(null);
+
+  const [submitting, setSubmitting] = useState(false);
+  const [apiError, setApiError] = useState(false);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -19,37 +22,123 @@ export default function CreateEvent() {
     end_date: "",
     requirements: "",
     tags: "",
-    image: ""
+    image: "",        // URL
+    imageFile: null   // FILE
   });
 
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/", { replace: true });
+    }
+  }, []);
+
+  useEffect(() => {
+    const checkBackendHealth = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/health");
+        if (!res.ok) throw new Error("Backend not healthy");
+      } catch (err) {
+        console.error("Backend health check failed", err);
+        navigate("/error", { replace: true });
+      }
+    };
+
+    checkBackendHealth();
+  }, []);
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    if (e.target.type === "file") {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Image size must be less than 5 MB");
+        e.target.value = "";
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        alert("Only image files are allowed");
+        e.target.value = "";
+        return;
+      }
+
+      setFormData(prev => ({
+        ...prev,
+        imageFile: file,
+        image: ""
+      }));
+      return;
+    }
+
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+      imageFile: e.target.name === "image" ? null : prev.imageFile
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/events", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: formData.title,
-        description: formData.description,
-        category: formData.category,
-        max_participants: parseInt(formData.max_participants),
-        location: formData.location,
-        start_date: formData.start_date,
-        end_date: formData.end_date,
-        requirements: formData.requirements,
-        tags: formData.tags.split(",").map(t => t.trim()),
-        image:
-          formData.image ||
-          "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80"
-      })
-    }).then(() => navigate("/college-dashboard"));
+    if (submitting) return;
+
+    if (formData.image && formData.imageFile) {
+      alert("Use either Image URL or Image Upload, not both");
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      const data = new FormData();
+
+      data.append("title", formData.title);
+      data.append("description", formData.description);
+      data.append("category", formData.category);
+      data.append("max_participants", formData.max_participants);
+      data.append("location", formData.location);
+      data.append("start_date", formData.start_date);
+      data.append("end_date", formData.end_date);
+      data.append("requirements", formData.requirements);
+      data.append("tags", formData.tags);
+
+      // IMPORTANT: only ONE image source
+      if (formData.imageFile) {
+        data.append("image", formData.imageFile);   // multer file
+      } else if (formData.image) {
+        data.append("imageUrl", formData.image);    // plain URL
+      }
+
+      const user = JSON.parse(localStorage.getItem("user"));
+      const res = await fetch("http://localhost:5000/events", {
+        method: "POST",
+        headers: {
+          "x-user-id": user?._id
+        },
+        body: data
+      });
+
+      if (!res.ok) {
+        if (res.status === 500 || res.status === 0) {
+          throw new Error("Backend not reachable");
+        }
+        throw new Error("Failed to create event");
+      }
+
+      alert("Event successfully created");
+      navigate("/college-dashboard");
+    } catch (err) {
+      console.error(err);
+      setApiError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+  if (apiError) {
+    navigate("/error", { replace: true });
+    return null;
+  }
 
   return (
     <div className="ce-page">
@@ -66,8 +155,8 @@ export default function CreateEvent() {
             <input
               type="text"
               name="title"
-              placeholder="e.g., Inter-College Hackathon 2024"
               required
+              placeholder="e.g., Inter-College Hackathon 2024"
               value={formData.title}
               onChange={handleChange}
             />
@@ -75,7 +164,7 @@ export default function CreateEvent() {
 
           {/* DESCRIPTION */}
           <div className="ce-field">
-            <label>Event Description *</label>
+            <label>Description *</label>
             <textarea
               name="description"
               rows="4"
@@ -86,7 +175,7 @@ export default function CreateEvent() {
             />
           </div>
 
-          {/* CATEGORY + MAX PARTICIPANTS */}
+          {/* CATEGORY + MAX */}
           <div className="ce-row">
             <div className="ce-field">
               <label>Category *</label>
@@ -96,7 +185,7 @@ export default function CreateEvent() {
                 value={formData.category}
                 onChange={handleChange}
               >
-                <option value="">Select event category</option>
+                <option value="">Select</option>
                 <option value="hackathon">Hackathon</option>
                 <option value="cultural">Cultural</option>
                 <option value="sports">Sports</option>
@@ -110,9 +199,9 @@ export default function CreateEvent() {
               <input
                 type="number"
                 name="max_participants"
-                placeholder="e.g., 200"
-                required
                 min="0"
+                required
+                placeholder="e.g., 200"
                 value={formData.max_participants}
                 onChange={handleChange}
               />
@@ -121,21 +210,21 @@ export default function CreateEvent() {
 
           {/* LOCATION */}
           <div className="ce-field">
-            <label>Event Location *</label>
+            <label>Location *</label>
             <input
               type="text"
               name="location"
-              placeholder="e.g., Tech Innovation Center, Building A"
               required
+              placeholder="e.g., Tech Innovation Center, Building A"
               value={formData.location}
               onChange={handleChange}
             />
           </div>
 
-          {/* START + END DATE */}
+          {/* DATES */}
           <div className="ce-row2">
             <div className="ce-field">
-              <label>Start Date & Time *</label>
+              <label>Start Date *</label>
               <div className="dt-wrapper">
                 <input
                   type="datetime-local"
@@ -152,8 +241,9 @@ export default function CreateEvent() {
                 />
               </div>
             </div>
+
             <div className="ce-field">
-              <label>End Date & Time *</label>
+              <label>End Date *</label>
               <div className="dt-wrapper">
                 <input
                   type="datetime-local"
@@ -178,8 +268,8 @@ export default function CreateEvent() {
             <input
               type="text"
               name="requirements"
-              placeholder="e.g., Laptop, Student ID, Team of 2-4 members"
               required
+              placeholder="e.g., Laptop, Student ID, Team of 2-4 members"
               value={formData.requirements}
               onChange={handleChange}
             />
@@ -187,20 +277,20 @@ export default function CreateEvent() {
 
           {/* TAGS */}
           <div className="ce-field">
-            <label>Tags (comma separated) *</label>
+            <label>Tags *</label>
             <input
               type="text"
               name="tags"
-              placeholder="e.g., Technology, Competition, Team Event"
               required
+              placeholder="e.g., Technology, Competition, Team Event"
               value={formData.tags}
               onChange={handleChange}
             />
           </div>
 
-          {/* IMAGE URL */}
+          {/* IMAGE */}
           <div className="ce-field">
-            <label>Image URL (optional)</label>
+            <label>Event Image (URL or Upload)</label>
             <input
               type="url"
               name="image"
@@ -208,13 +298,23 @@ export default function CreateEvent() {
               value={formData.image}
               onChange={handleChange}
             />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleChange}
+            />
           </div>
 
           {/* BUTTONS */}
           <div className="ce-buttons">
-            <button type="submit" className="ce-submit">
-              Create Event
+            <button
+              type="submit"
+              className="ce-submit"
+              disabled={submitting}
+            >
+              {submitting ? "Creating..." : "Create Event"}
             </button>
+
             <button
               type="button"
               className="ce-cancel"

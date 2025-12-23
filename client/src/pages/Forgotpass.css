@@ -9,15 +9,6 @@
   justify-content: center;
 }
 
-/* this portion is done by praveen kumar */
-/* Logo styling for forgot password page */
-.login-logo {
-  height: 32px;
-  width: auto;
-  margin-right: 10px;
-}
-/* this section of praveen kumar code is end here */
-
 .forgotpass-card {
   width: 400px;
   padding: 40px;
@@ -31,11 +22,6 @@
   margin-bottom: 30px;
   font-size: 28px;
   color: #333333;
-  /* this portion is done by praveen kumar */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* this section of praveen kumar code is end here */
 }
 
 .forgotpass-form {
@@ -71,63 +57,3 @@
 .forgotpass-btn:hover {
   background: #3b78e0;
 }
-
-/* ============================================ */
-/* this portion is done by praveen kumar */
-/* Mobile Responsiveness */
-/* ============================================ */
-
-@media (max-width: 768px) {
-  .forgotpass-card {
-    width: 90%;
-    max-width: 400px;
-    padding: 35px;
-  }
-
-  .forgotpass-title {
-    font-size: 24px;
-    margin-bottom: 25px;
-  }
-
-  .forgotpass-form {
-    gap: 18px;
-  }
-
-  .forgotpass-input {
-    font-size: 14px;
-    padding: 12px;
-  }
-
-  .forgotpass-btn {
-    font-size: 15px;
-    padding: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .forgotpass-card {
-    width: 95%;
-    padding: 30px 20px;
-  }
-
-  .forgotpass-title {
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
-
-  .forgotpass-form {
-    gap: 15px;
-  }
-
-  .forgotpass-input {
-    font-size: 13px;
-    padding: 11px;
-  }
-
-  .forgotpass-btn {
-    font-size: 14px;
-    padding: 11px;
-  }
-}
-
-/* this section of praveen kumar code is end here */

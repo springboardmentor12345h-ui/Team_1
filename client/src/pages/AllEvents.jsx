@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Lottie from "lottie-react";
+import noresultsAnimation from "../assets/noresults.json";
 import './AllEvents.css'
 export default function AllEvents() {
     const navigate = useNavigate();
@@ -15,24 +17,44 @@ export default function AllEvents() {
     const [statusFilter, setStatusFilter] = useState("All Status");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    /* this portion is done by praveen kumar */
-    const [showFilters, setShowFilters] = useState(false); // For mobile filter toggle
-    /* this section of praveen kumar code is end here */
+    const [apiError, setApiError] = useState(false);
 
     useEffect(() => {
-        let mounted = true;
-        setLoading(true);
-        fetch("http://localhost:5000/events")
-            .then((res) => res.json())
-            .then((data) => {
-                if (!mounted) return;
-                setEvents(Array.isArray(data) ? data : []);
-            })
-            .catch(() => setEvents([]))
-            .finally(() => mounted && setLoading(false));
+      let mounted = true;
 
-        return () => (mounted = false);
+      const loadEvents = async () => {
+        try {
+          setLoading(true);
+
+          const res = await fetch("http://localhost:5000/events");
+          if (!res.ok) throw new Error("Events API down");
+
+          const data = await res.json();
+          if (!mounted) return;
+
+          setEvents(Array.isArray(data) ? data : []);
+          setApiError(false);
+        } catch (err) {
+          console.error("Backend not reachable", err);
+          if (mounted) {
+            setApiError(true);
+            setEvents([]);
+          }
+        } finally {
+          mounted && setLoading(false);
+        }
+      };
+
+      loadEvents();
+      return () => {
+        mounted = false;
+      };
     }, []);
+
+    if (apiError) {
+      navigate("/error", { replace: true });
+      return null;
+    }
 
     const categories = useMemo(() => {
         const set = new Set();
@@ -75,53 +97,44 @@ export default function AllEvents() {
     return (
         <div className="ae-page">
             <div className="ae-wrapper">
-
                 <div className="ae-header">
                     <h1 className="ae-title">All Events</h1>
                     <p className="ae-subtitle">Discover and register for exciting inter-college events</p>
                 </div>
-
                 <div className="ae-layout">
 
-                    {/* this portion is done by praveen kumar */}
-                    {/* Mobile Filter Toggle Button */}
-                    <button className="ae-filter-toggle" onClick={() => setShowFilters(!showFilters)}>
-                        {showFilters ? '✕ Close Filters' : '☰ Show Filters'}
-                    </button>
-                    {/* this section of praveen kumar code is end here */}
-
                     {/* FILTERS */}
-                    {/* this portion is done by praveen kumar */}
-                    <aside className={`ae-filters ${showFilters ? 'ae-filters-mobile-open' : ''}`}>
-                    {/* this section of praveen kumar code is end here */}
+                    <aside className="ae-filters">
                         <div className="ae-filter-card">
 
                             <h3 className="ae-filter-heading">Filters</h3>
 
-                            <div className="ae-filter-group">
-                                <label className="ae-filter-label">Event Type</label>
-                                <select
-                                    className="ae-select"
-                                    value={categoryFilter}
-                                    onChange={(e) => setCategoryFilter(e.target.value)}
-                                >
-                                    {categories.map((c) => (
-                                        <option key={c} value={c}>{c}</option>
-                                    ))}
-                                </select>
-                            </div>
+                            <div className="ae-filter-row">
+                                <div className="ae-filter-group">
+                                    <label className="ae-filter-label">Event Type</label>
+                                    <select
+                                        className="ae-select"
+                                        value={categoryFilter}
+                                        onChange={(e) => setCategoryFilter(e.target.value)}
+                                    >
+                                        {categories.map((c) => (
+                                            <option key={c} value={c}>{c}</option>
+                                        ))}
+                                    </select>
+                                </div>
 
-                            <div className="ae-filter-group">
-                                <label className="ae-filter-label">Status</label>
-                                <select
-                                    className="ae-select"
-                                    value={statusFilter}
-                                    onChange={(e) => setStatusFilter(e.target.value)}
-                                >
-                                    {statuses.map((s) => (
-                                        <option key={s} value={s}>{s}</option>
-                                    ))}
-                                </select>
+                                <div className="ae-filter-group">
+                                    <label className="ae-filter-label">Status</label>
+                                    <select
+                                        className="ae-select"
+                                        value={statusFilter}
+                                        onChange={(e) => setStatusFilter(e.target.value)}
+                                    >
+                                        {statuses.map((s) => (
+                                            <option key={s} value={s}>{s}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
 
                             <div className="ae-filter-group date">
@@ -195,6 +208,14 @@ export default function AllEvents() {
 
                         {loading ? (
                             <div className="ae-loading">Loading events...</div>
+                        ) : filteredEvents.length === 0 ? (
+                            <div className="ae-no-results">
+                                <Lottie
+                                    animationData={noresultsAnimation}
+                                    loop={true}
+                                    className="svgres"
+                                />
+                            </div>
                         ) : (
                             <div className="ae-grid">
                                 {filteredEvents.map((event) => (
