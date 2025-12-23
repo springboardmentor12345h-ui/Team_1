@@ -1,0 +1,19 @@
+# Root level ignores
+# Client and server folders have their own .gitignore files
+
+# Editor/IDE settings
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dependencies (if accidentally created at root)
+node_modules/
+
+# Environment files (if accidentally created at root)
+.env
+.env.*
+!.env.example
