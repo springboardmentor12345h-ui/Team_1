@@ -17,6 +17,7 @@ export const mockEvents = [
     requirements: "Laptop, Student ID, Team of 2-4 members",
     tags: ["Technology", "Competition", "Team Event"]
   },
+  
   {
     id: "2",
     college_id: "2",
