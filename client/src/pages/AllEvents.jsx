@@ -18,6 +18,7 @@ export default function AllEvents() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [apiError, setApiError] = useState(false);
+    const [showMyCreations, setShowMyCreations] = useState(false);
 
     useEffect(() => {
       let mounted = true;
@@ -68,8 +69,19 @@ export default function AllEvents() {
         return ["All Status", ...Array.from(set)];
     }, [events]);
 
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const currentUserId = user?._id;
+
     const filteredEvents = useMemo(() => {
         return events.filter((ev) => {
+            if (
+              showMyCreations &&
+              String(typeof ev.createdBy === "object" ? ev.createdBy._id : ev.createdBy) !==
+                String(currentUserId)
+            ) {
+              return false;
+            }
             if (categoryFilter !== "All Types" && ev.category !== categoryFilter) return false;
             if (statusFilter !== "All Status" && ev.status !== statusFilter) return false;
 
@@ -84,7 +96,7 @@ export default function AllEvents() {
             }
             return true;
         });
-    }, [events, categoryFilter, statusFilter, search, startDate, endDate]);
+    }, [events, categoryFilter, statusFilter, search, startDate, endDate, showMyCreations, currentUserId]);
 
     const clearFilters = () => {
         setCategoryFilter("All Types");
@@ -204,6 +216,13 @@ export default function AllEvents() {
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
+                            <button
+                              className="ae-my-btn"
+                              disabled={!currentUserId}
+                              onClick={() => setShowMyCreations((prev) => !prev)}
+                            >
+                              {showMyCreations ? "All Events" : "My Creations"}
+                            </button>
                         </div>
 
                         {loading ? (
@@ -268,7 +287,7 @@ export default function AllEvents() {
                                                     {event.location || "TBA"}
                                                 </span>
                                                 <span className="ae-meta-item ae-meta-right">
-                                                    {event.registered_count || 0} participating
+                                                    {event.max_participants || 0} participating
                                                 </span>
                                             </div>
 

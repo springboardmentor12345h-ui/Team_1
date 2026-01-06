@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import Registration from "../models/Registration.js";
 import Notification from "../models/Notification.js";
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -136,6 +137,82 @@ router.get("/stats/participants", authMiddleware, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to fetch participant stats" });
+  }
+});
+
+/**
+ * Admin: Get participant statistics ONLY for events created by this admin
+ */
+router.get("/stats/participants/admin", authMiddleware, async (req, res) => {
+  try {
+    const adminId = req.user.id;
+
+    const stats = await Registration.aggregate([
+      {
+        $lookup: {
+          from: "events",
+          localField: "eventId",
+          foreignField: "_id",
+          as: "event"
+        }
+      },
+      { $unwind: "$event" },
+      {
+        $match: {
+          "event.createdBy": new mongoose.Types.ObjectId(adminId)
+        }
+      },
+      {
+        $group: {
+          _id: "$status",
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    const result = {
+      approvedParticipants: 0,
+      pendingParticipants: 0,
+      rejectedParticipants: 0
+    };
+
+    stats.forEach(item => {
+      if (item._id === "Approved") result.approvedParticipants = item.count;
+      if (item._id === "Pending") result.pendingParticipants = item.count;
+      if (item._id === "Rejected") result.rejectedParticipants = item.count;
+    });
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch admin participant stats" });
+  }
+});
+
+// Get registrations ONLY for events created by this admin
+router.get("/admin/:adminId", async (req, res) => {
+  try {
+    const { adminId } = req.params;
+
+    const registrations = await Registration.find()
+      .populate({
+        path: "eventId",
+        match: { createdBy: adminId },
+        select: "_id title createdBy"
+      })
+      .populate("userId", "name email");
+
+    // Filter out registrations where eventId is null (not created by this admin)
+    const filteredRegistrations = registrations.filter(
+      (reg) => reg.eventId !== null
+    );
+
+    res.json(filteredRegistrations);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Failed to fetch registrations for admin"
+    });
   }
 });
 

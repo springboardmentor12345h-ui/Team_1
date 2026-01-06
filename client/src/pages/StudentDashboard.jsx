@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import './StudentDashboard.css'
-import StudentChatbot from "../components/StudentChatbot";
-import logo from "../assets/logo.png";
+import logo from "/logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 export function StudentDashboardNavbar() {

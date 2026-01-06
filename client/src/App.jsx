@@ -14,12 +14,14 @@ import { StudentDashboardNavbar } from "./pages/StudentDashboard.jsx";
 import ErrorPage from "./components/errorpage";
 import GlobalLoader from "./components/GlobalLoader";
 import StudentChatbot from "./components/StudentChatbot";
+import AdminChatbot from "./components/AdminChatbot";
 
-function AppLayout() {
+function AppLayout({ navbarProps, chatbotProps }) {
   return (
     <>
-      <CollegeDashboardNavbar />
+      <CollegeDashboardNavbar {...navbarProps} />
       <Outlet />
+      <AdminChatbot stats={chatbotProps} />
     </>
   );
 }
@@ -47,6 +49,46 @@ export default function App() {
   const [appLoading, setAppLoading] = useState(true);
   const location = useLocation();
 
+  const [myEvents, setMyEvents] = useState([]);
+  const [myRegistrations, setMyRegistrations] = useState([]);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user?._id) return;
+
+    // fetch events created by this admin
+    fetch(`http://localhost:5000/events?createdBy=${user._id}`)
+      .then(res => res.json())
+      .then(data => {
+        setMyEvents(Array.isArray(data) ? data : []);
+      })
+      .catch(() => setMyEvents([]));
+
+    // fetch registrations ONLY for events created by this admin
+    fetch(`http://localhost:5000/registrations/admin/${user._id}`)
+      .then(res => res.json())
+      .then(data => {
+        setMyRegistrations(Array.isArray(data) ? data : []);
+      })
+      .catch(() => setMyRegistrations([]));
+  }, []);
+
+  const stats = React.useMemo(() => {
+    const relevantRegistrations = myRegistrations;
+
+    return {
+      total: myEvents.length,
+      approvedParticipants: relevantRegistrations.filter(
+        r => r.status?.toLowerCase() === "approved"
+      ).length,
+      pendingParticipants: relevantRegistrations.filter(
+        r => r.status?.toLowerCase() === "pending"
+      ).length,
+      rejectedParticipants: relevantRegistrations.filter(
+        r => r.status?.toLowerCase() === "rejected"
+      ).length
+    };
+  }, [myEvents, myRegistrations]);
 
   useLayoutEffect(() => {
     setAppLoading(true);
@@ -84,7 +126,27 @@ export default function App() {
             <Route path="/student-dashboard/all-events/event/:id" element={<EventDetails />} />
           </Route>
 
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <AppLayout
+                navbarProps={{
+                  myEvents,
+                  myRegistrations,
+                  approvedCount: stats.approvedParticipants,
+                  pendingCount: stats.pendingParticipants,
+                  rejectedCount: stats.rejectedParticipants,
+                  totalEventsCreated: stats.total
+                }}
+                chatbotProps={{
+                  myEvents,
+                  totalEventsCreated: myEvents.length,
+                  approvedParticipants: stats.approvedParticipants,
+                  pendingParticipants: stats.pendingParticipants,
+                  rejectedParticipants: stats.rejectedParticipants
+                }}
+              />
+            }
+          >
             <Route path="/college-dashboard" element={<CollegeDashboard />} />
             <Route path="/manage-participants" element={<ManageParticipants />} />
             <Route path="/feedback" element={<FeedbackAnalysis />} />

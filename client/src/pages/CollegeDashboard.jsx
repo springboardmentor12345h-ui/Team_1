@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import AdminChatbot from "../components/AdminChatbot";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import './CollegeDashboard.css'
-import logo from "../assets/logo.png";
+import logo from "/logo.png";
 
-export function CollegeDashboardNavbar() {
+export function CollegeDashboardNavbar({
+  myEvents = [],
+  approvedCount = 0,
+  pendingCount = 0,
+  myRegistrations = []
+}) {
   const location = useLocation();
   const isActive = (path) => location.pathname.startsWith(path);
 
@@ -47,92 +51,94 @@ export function CollegeDashboardNavbar() {
   }, [location.pathname]);
 
   return (
-    <div className="top-navbar">
-      <div className="brandlogo">
-                <div className="logo-wrapper1">
-                  <img
-                    src={logo}
-                    alt="CampusEventHub Logo"
-                    className="dashlogo1"
-                  />
-                </div>
-                <div id="brand">CampusEventHub</div></div>
+    <>
+      <div className="top-navbar">
+        <div className="brandlogo">
+          <div className="logo-wrapper1">
+            <img
+              src={logo}
+              alt="CampusEventHub Logo"
+              className="dashlogo1"
+            />
+          </div>
+          <div id="brand">CampusEventHub</div></div>
 
-      <div
-        className="hamburger-icon"
-        onClick={() => setMenuOpen(prev => !prev)}
-      >
-        <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
-      </div>
+        <div
+          className="hamburger-icon"
+          onClick={() => setMenuOpen(prev => !prev)}
+        >
+          <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+        </div>
 
-      <div className={`nav-links ${menuOpen ? "nav-links-mobile-open" : ""}`}>
-        <a
-          className={isActive("/college-dashboard") ? "nav-link active" : "nav-link"}
-          onClick={() => {
-            setMenuOpen(false);
-            navigate("/college-dashboard");
-          }}
-        >
-          Dashboard
-        </a>
-        <a
-          className={isActive("/all-events") ? "nav-link active" : "nav-link"}
-          onClick={() => {
-            setMenuOpen(false);
-            navigate("/all-events");
-          }}
-        >
-          All Events
-        </a>
-        <a
-          className={isActive("/create-event") ? "nav-link active" : "nav-link"}
-          onClick={() => {
-            setMenuOpen(false);
-            navigate("/create-event");
-          }}
-        >
-          Create Event
-        </a>
-        <a
-          className={isActive("/manage-participants") ? "nav-link active" : "nav-link"}
-          onClick={() => {
-            setMenuOpen(false);
-            navigate("/manage-participants");
-          }}
-        >
-          Manage Participants
-        </a>
-        <a
-          className={isActive("/feedback") ? "nav-link active" : "nav-link"}
-          onClick={() => {
-            setMenuOpen(false);
-            navigate("/feedback");
-          }}
-        >
-          Feedback
-        </a>
-        <a
-          className="mobile-logout"
-          onClick={() => {
-            setMenuOpen(false);
-            handleLogout();
-          }}
-        >
-          Logout
-        </a>
-      </div>
+        <div className={`nav-links ${menuOpen ? "nav-links-mobile-open" : ""}`}>
+          <a
+            className={isActive("/college-dashboard") ? "nav-link active" : "nav-link"}
+            onClick={() => {
+              setMenuOpen(false);
+              navigate("/college-dashboard");
+            }}
+          >
+            Dashboard
+          </a>
+          <a
+            className={isActive("/all-events") ? "nav-link active" : "nav-link"}
+            onClick={() => {
+              setMenuOpen(false);
+              navigate("/all-events");
+            }}
+          >
+            All Events
+          </a>
+          <a
+            className={isActive("/create-event") ? "nav-link active" : "nav-link"}
+            onClick={() => {
+              setMenuOpen(false);
+              navigate("/create-event");
+            }}
+          >
+            Create Event
+          </a>
+          <a
+            className={isActive("/manage-participants") ? "nav-link active" : "nav-link"}
+            onClick={() => {
+              setMenuOpen(false);
+              navigate("/manage-participants");
+            }}
+          >
+            Manage Participants
+          </a>
+          <a
+            className={isActive("/feedback") ? "nav-link active" : "nav-link"}
+            onClick={() => {
+              setMenuOpen(false);
+              navigate("/feedback");
+            }}
+          >
+            Feedback
+          </a>
+          <a
+            className="mobile-logout"
+            onClick={() => {
+              setMenuOpen(false);
+              handleLogout();
+            }}
+          >
+            Logout
+          </a>
+        </div>
 
-      <div className="user-box">
-        <span>{JSON.parse(localStorage.getItem("user"))?.email || "User"}</span>
-        <FontAwesomeIcon
-          icon={isDarkMode ? faSun : faMoon}
-          className="theme-toggle-icon"
-          onClick={toggleTheme}
-          title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-        />
-        <button className="logout-btn" onClick={handleLogout}>Logout</button>
+        <div className="user-box">
+          <span>{JSON.parse(localStorage.getItem("user"))?.email || "User"}</span>
+          <FontAwesomeIcon
+            icon={isDarkMode ? faSun : faMoon}
+            className="theme-toggle-icon"
+            onClick={toggleTheme}
+            title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          />
+          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -196,23 +202,43 @@ export default function CollegeDashboard() {
 
   const myEventIds = myEvents.map(e => e._id);
 
-  const myRegistrations = registrations.filter(
-    r => r.eventId && myEventIds.includes(
-      typeof r.eventId === "string" ? r.eventId : r.eventId._id
-    )
-  );
+  const myRegistrations = registrations.filter(r => {
+    if (!r.eventId) return false;
 
-  const approvedCount = myRegistrations.filter(r => r.status === "Approved").length;
-  const pendingCount = myRegistrations.filter(r => r.status === "Pending").length;
+    const eventId =
+      typeof r.eventId === "string"
+        ? r.eventId
+        : r.eventId._id;
+
+    return myEventIds.includes(eventId);
+  });
+
+  const approvedCount = myRegistrations.filter(
+    r => r.status?.toLowerCase() === "approved"
+  ).length;
+
+  const pendingCount = myRegistrations.filter(
+    r => r.status?.toLowerCase() === "pending"
+  ).length;
 
   const isDark = document.documentElement.classList.contains("dark-mode");
 
+
+
+  const chatbotStats = {
+    total: myEvents.length,
+    approvedParticipants: approvedCount,
+    pendingParticipants: pendingCount,
+    rejectedParticipants: myRegistrations.filter(
+      r => r.status?.toLowerCase() === "rejected"
+    ).length
+  };
+
   return (
     <div className={`dashboard-wrapper ${isDark ? "dark" : ""}`}>
-
       {/* MAIN CONTENT */}
       <div className="page-container">
-        
+
         <h1 className="page-title">Admin Dashboard</h1>
         <p className="page-sub">Welcome back, Admin ! Here's your event overview. </p>
 
@@ -254,7 +280,7 @@ export default function CollegeDashboard() {
           </div>
 
           <div className="stat-card">
-            <p className="stat-label">Total Events</p>
+            <p className="stat-label">My Events</p>
             <p className="stat-number">{myEvents.length}</p>
           </div>
         </div>
@@ -306,16 +332,7 @@ export default function CollegeDashboard() {
             </div>
           ))}
         </div>
-
       </div>
-    <AdminChatbot
-      events={{
-        total: myEvents.length,
-        approvedParticipants: approvedCount,
-        pendingParticipants: pendingCount,
-        rejectedParticipants: myRegistrations.filter(r => r.status === "Rejected").length
-      }}
-    />
     </div>
   );
 }

@@ -129,8 +129,6 @@ export default function FeedbackAnalysis() {
               </option>
             ))}
           </select>
-
-          <button onClick={() => loadData(eventId)} className="fa-load-btn">Load</button>
           <button onClick={() => loadData(eventId)} className="fa-load-btn">Refresh</button>
         </div>
 

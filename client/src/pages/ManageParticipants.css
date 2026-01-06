@@ -384,6 +384,7 @@ html.dark-mode .mp-reject-btn:hover {
     box-shadow: none;
 }
 
+
 @media (min-width: 900px) {
     .mp-inner {
         width: 85%;

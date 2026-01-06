@@ -313,7 +313,7 @@ if (apiError) {
                 />
               </div>
             </section>
-            {fromStudent && (
+            {fromStudent && regStatus === "Approved" && (
               hasFeedback ? (
                 <button
                   className="ed-feedback-btn"

@@ -14,7 +14,7 @@ export default function StudentChatbot({ events }) {
   const messagesEndRef = useRef(null);
 
   const questions = [
-    "What are upcoming events?",
+    "Which all events are there?",
     "How many events are available?",
     "List cultural events",
     "When is the next event?",
@@ -49,12 +49,12 @@ export default function StudentChatbot({ events }) {
     const question = q.toLowerCase();
     let reply = "";
 
-    if (question.includes("upcoming")) {
+    if (question.includes("there")) {
       const upcoming = events.filter(e => !e.completed);
       reply = upcoming.length
-        ? `Upcoming Events:\n${upcoming
-            .map((e, i) => `${i + 1}. ${e.title}`)
-            .join("\n")}`
+        ? ` Events:\n${upcoming
+          .map((e, i) => `${i + 1}. ${e.title}`)
+          .join("\n")}`
         : "There are no upcoming events right now.";
     }
 
@@ -69,8 +69,8 @@ export default function StudentChatbot({ events }) {
 
       reply = culturalEvents.length
         ? `Cultural Events:\n${culturalEvents
-            .map((e, i) => `${i + 1}. ${e.title}`)
-            .join("\n")}`
+          .map((e, i) => `${i + 1}. ${e.title}`)
+          .join("\n")}`
         : "No cultural events available.";
     }
 
@@ -83,7 +83,9 @@ export default function StudentChatbot({ events }) {
 
     else if (question.includes("where") || question.includes("location")) {
       const locations = [...new Set(events.map(e => e.location))];
-      reply = `Events are conducted at:\n${locations.join(", ")}`;
+      reply = `Events are conducted at:\n${locations
+        .map(loc => `• ${loc}`)
+        .join("\n")}`;
     }
 
     else {

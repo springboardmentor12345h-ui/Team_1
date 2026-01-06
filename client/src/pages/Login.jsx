@@ -4,7 +4,7 @@ import axios from "axios"
 import './Login.css'
 import Lottie from "lottie-react";
 import walkingAnimation from "../assets/walking2.json";
-import logo from "../assets/logo.png";
+import logo from "/logo.png";
 
 export default function Login() {
   const [email, setEmail] = useState("")

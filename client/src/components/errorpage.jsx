@@ -15,7 +15,6 @@ export default function ErrorPage() {
           loop
           className="error-animation"
         />
-        <h1 className="error-title">Error connecting to the servers</h1>
         <button className="error-btn" onClick={() => navigate("/")}>
           Retry
         </button>

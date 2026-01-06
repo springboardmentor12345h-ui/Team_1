@@ -3,7 +3,7 @@ import Lottie from "lottie-react";
 import chatbotAnimation from "../assets/chatbot.json";
 import "./StudentChatbot.css";
 
-export default function AdminChatbot({ events }) {
+export default function AdminChatbot({ stats }) {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
     { from: "bot", text: "Hi 👋 I can help you with event information!" }
@@ -16,7 +16,7 @@ export default function AdminChatbot({ events }) {
 
   const questions = [
     "How many total events are there?",
-    "How many participants are approved?",
+    "How many participants have I approved?",
     "How many participants are pending approval?",
     "How many participants are rejected?",
     "Give me a summary of event status"
@@ -26,10 +26,44 @@ export default function AdminChatbot({ events }) {
     setMessages(prev => [...prev, { from, text }]);
   };
 
+  const normalizeStats = (stats) => {
+    if (!stats || typeof stats !== "object") {
+      return {
+        total: 0,
+        approvedParticipants: 0,
+        pendingParticipants: 0,
+        rejectedParticipants: 0,
+      };
+    }
+
+    // Priority order:
+    // 1. myEvents (full event objects)
+    // 2. myEventIds (IDs only)
+    // 3. totalEventsCreated (explicit count if provided)
+
+    let totalEvents = 0;
+
+    if (Array.isArray(stats.myEvents) && stats.myEvents.length > 0) {
+      totalEvents = stats.myEvents.length;
+    } else if (Array.isArray(stats.myEventIds) && stats.myEventIds.length > 0) {
+      totalEvents = stats.myEventIds.length;
+    } else if (Number.isFinite(stats.totalEventsCreated)) {
+      totalEvents = Number(stats.totalEventsCreated);
+    }
+
+    return {
+      total: totalEvents,
+      approvedParticipants: Number(stats.approvedParticipants ?? 0),
+      pendingParticipants: Number(stats.pendingParticipants ?? 0),
+      rejectedParticipants: Number(stats.rejectedParticipants ?? 0),
+    };
+  };
+
   const handleQuestion = (q) => {
     addMessage("user", q);
+    const safeStats = normalizeStats(stats);
 
-    if (!events || typeof events !== "object") {
+    if (!stats || typeof stats !== "object") {
       setTimeout(() => {
         addMessage("bot", "Admin data is not available right now.");
       }, 300);
@@ -40,36 +74,41 @@ export default function AdminChatbot({ events }) {
     let reply = "";
 
     // 1. TOTAL EVENTS
-    if (question.includes("total events")) {
-      reply = `📊 You have created ${events.total ?? 0} total events.`;
+    if (question.includes("total")) {
+      if (safeStats.total === 0) {
+        reply = "You haven’t created any events yet.";
+      } else if (safeStats.total === 1) {
+        reply = "📊 You have created 1 event.";
+      } else {
+        reply = `📊 There are ${safeStats.total} total events.`;
+      }
     }
 
     // 2. APPROVED PARTICIPANTS
     else if (question.includes("approved")) {
-      reply = `✅ ${events.approvedParticipants ?? 0} participants are approved.`;
+      reply = `✅ ${safeStats.approvedParticipants} participants are approved.`;
     }
 
     // 3. PENDING PARTICIPANTS
     else if (question.includes("pending")) {
-      reply = `⏳ ${events.pendingParticipants ?? 0} participants are pending approval.`;
+      reply = `⏳ ${safeStats.pendingParticipants} participants are pending approval.`;
     }
 
     // 4. REJECTED PARTICIPANTS
     else if (question.includes("rejected")) {
-      reply = `❌ ${events.rejectedParticipants ?? 0} participants are rejected.`;
+      reply = `❌ ${safeStats.rejectedParticipants} participants are rejected.`;
     }
 
     // 5. SUMMARY
     else if (question.includes("summary")) {
-      if ((events.total ?? 0) === 0) {
+      if (safeStats.total === 0) {
         reply = "You haven’t created any events yet.";
       } else {
         reply =
           `📌 Event Summary:\n` +
-          `• Total Events: ${events.total ?? 0}\n` +
-          `• Approved Participants: ${events.approvedParticipants ?? 0}\n` +
-          `• Pending Participants: ${events.pendingParticipants ?? 0}\n` +
-          `• Rejected Participants: ${events.rejectedParticipants ?? 0}`;
+          `• Approved Participants: ${safeStats.approvedParticipants}\n` +
+          `• Pending Participants: ${safeStats.pendingParticipants}\n` +
+          `• Rejected Participants: ${safeStats.rejectedParticipants}`;
       }
     }
 

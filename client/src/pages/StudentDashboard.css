@@ -759,12 +759,12 @@
 
 .notification-panel {
     position: relative;
-    width: 50vw;
-    height: 90vh;
+    width: clamp(280px, 80vw, 900px);
+    height: clamp(60vh, 85vh, 90vh);
     background: #ffffff;
 
     border-radius: 14px;
-    padding: 24px;
+    padding: clamp(14px, 3vw, 24px);
 
     box-shadow: -12px 0 30px rgba(0, 0, 0, 0.25);
     overflow-y: auto;
@@ -772,8 +772,8 @@
 
 /* Header inside notification panel */
 .notification-panel h3 {
-    margin: 0 0 22px 0;
-    font-size: 30px;
+    margin: 0 0 clamp(14px, 3vw, 22px) 0;
+    font-size: clamp(1.2rem, 3vw, 1.9rem);
     font-weight: 740;
     color: #111;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
@@ -787,14 +787,14 @@
 
 .notification-close {
   position: absolute;
-  top: 10px;
-  right: 12px;
+  top: clamp(6px, 1.5vw, 10px);
+  right: clamp(6px, 1.5vw, 12px);
 
   background: none;
   border: none;
   padding: 0;
 
-  font-size: 22px;
+  font-size: clamp(1rem, 3vw, 1.4rem);
   font-weight: 700;
   color: #000;
   cursor: pointer;
@@ -806,36 +806,34 @@
 =========================== */
 
 .notification-item {
-  padding: 14px 16px;
-  margin-bottom: 12px;
-  border-radius: 10px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+    padding: clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 16px);
+    margin-bottom: clamp(8px, 2vw, 12px);
+    border-radius: 10px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
 
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 1.5vw, 8px);
 }
 
-/* Notification type label */
+/* Notification type label, message, and timestamp */
 .notification-item strong {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  color: #4b4e53;
+    font-size: clamp(0.65rem, 1.8vw, 0.85rem);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #4b4e53;
 }
 
-/* Notification message */
 .notification-item p {
-  margin: 0;
-  font-size: 14px;
-  color: #111827;
+    margin: 0;
+    font-size: clamp(0.75rem, 2vw, 0.95rem);
+    color: #111827;
 }
 
-/* Timestamp */
 .notification-item small {
-  font-size: 11px;
-  color: #6b7280;
+    font-size: clamp(0.6rem, 1.6vw, 0.75rem);
+    color: #6b7280;
 }
 
 /* Type-based styling */
@@ -1268,5 +1266,17 @@
 @media (max-width: 500px) {
   #brand {
     display: none;
+  }
+}
+/* ===========================
+   Chatbot graphic responsive scaling
+=========================== */
+
+@media (max-width: 1100px) {
+  .chatbot-toggle svg {
+    transform: scale(0.6) !important;
+    transform-origin: bottom right;
+    margin-bottom: 6rem !important;
+    margin-right: 6rem !important;
   }
 }
