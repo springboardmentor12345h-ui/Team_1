@@ -1,0 +1,207 @@
+.login-container {
+  height: 100%;
+  border-radius: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+
+  padding: 3rem;
+  gap:5rem;
+  
+}
+.login-outer{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: linear-gradient(135deg, #eae6f0, #4f68c2);
+  overflow: hidden;
+  --text-color: #111111;
+  --foreground: #111111;
+  --color-text: #111111;
+  
+}
+.login-illustration {
+  max-width: 25vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.login-illustration svg {
+  width: 100%;
+  height: auto;
+}
+
+.maincard{
+  margin: 2rem 0rem 2rem 5rem;
+  width:30%;
+  height:30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #111111;
+}
+
+.login-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.login-logo {
+  width:6rem;
+  height: auto;
+}
+
+.title {
+  font-family: 'kanit';
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #111111 !important;
+  opacity: 1 !important;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: #111111;
+}
+
+.input-field {
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #dcdde1;
+  font-size: 15px;
+  outline: none;
+}
+
+input:hover {
+  border-color: #000000;
+  cursor: text;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  caret-color: #000000;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+.login-btn {
+  padding: 9px 14px 9px 14px ;
+  background: #4b4e53;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family:'kanit';
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2rem;
+  justify-content: space-between;
+}
+
+.link-item {
+  font-size: 14px;
+  color: #333333 !important;
+  text-decoration: none;
+  background-color: white;
+  border: 1px solid #dcdde1;
+  opacity: 1 !important;
+  font-family:'kanit';
+}
+
+.link-item:hover,
+.login-btn:hover {
+  box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+  border: none;
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  padding: 8px 16px;
+  background-color: #4c8df6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.login-outer,
+.login-outer * {
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+@media (max-width: 600px) {
+  .maincard {
+    width: 80%;
+    margin:6rem;
+    padding: 2px;
+  }
+  .colrbox{
+    display: none;
+  }
+
+  .title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .input-field {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .login-btn {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .links {
+    gap: 6px;
+  }
+
+  .link-item {
+    font-size: 13px;
+  }
+
+  .login-container {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+ 
+  }
+  .login-illustration {
+    display: none;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html body .login-outer {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+}

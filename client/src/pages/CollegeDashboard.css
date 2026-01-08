@@ -1,0 +1,667 @@
+.dashboard-wrapper {
+    margin: 0;
+    padding: 0 1rem 1rem 1rem;
+    background: #ffffff;
+    font-family: Arial, sans-serif;
+    color: #000000;
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/* Top Navbar */
+.top-navbar {
+    color: white;
+    width: 100%;
+    background: #03011E;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 2px 5px 10px 5px rgba(0, 0, 0, 0.4);
+    font-family: 'kanit';
+    position: relative;
+    box-sizing: border-box;
+}
+
+.hamburger-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    z-index: 1001;
+}
+
+.mobile-logout {
+    display: none;
+}
+
+.brand {
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    width: auto;
+    gap: 8px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width:50%;
+    padding:8px;
+    background-color: #6b4ce6;
+    border-radius: 3rem;
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-size: 16px;
+    color:white;
+    font-weight: bold;
+    padding: 10px 20px 10px 20px;
+    border-radius: 2rem;
+}
+
+.nav-links a:hover{
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+    border:none;
+    background-color: white;
+    color:#4b4e53;
+    cursor: pointer;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-size: 16px;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 2rem;
+    transition: 0.2s ease;
+}
+
+.nav-link.active {
+    background-color: white;
+    color: #4b4e53;
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+}
+
+.nav-link:hover {
+    background-color: white;
+    color:#4b4e53;
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+}
+
+.user-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width:22%;
+    
+}
+
+.logout-btn {
+    padding: 8px 24px;
+    border-radius: 16px;
+    background: #f5f5f5;
+    cursor: pointer;
+    color:#4b4e53;
+    border:none;
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+}
+
+.logout-btn:hover{
+    color:white;
+    background-color: black;
+    border:none;
+}
+
+/* PAGE CONTENT */
+.page-container {
+    margin: 0rem 2rem 5rem 2rem;
+    padding-top: 2rem;
+    background: #ffffff;
+}
+
+.page-title {
+    font-size: 44px;
+    margin: 0px;
+    font-weight: bold;
+    color:black;
+    font-family: 'kanit';
+}
+
+.page-sub {
+    margin-top: 16px;
+    font-size: 21px;
+    color: #666;
+}
+
+/* ACTION BUTTONS */
+.action-buttons {
+    margin-top: 28px;
+    display: flex;
+    gap: 14px;
+}
+
+.purple-btn {
+    background: #6b4ce6;
+    color: white;
+    padding: 10px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    font-family: 'kanit';
+}
+
+.purple-btn:hover{
+    box-shadow: none;
+}
+
+.gray-btn {
+    background: #fff;
+    border: 2px solid #ccc;
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    color:black;
+}
+
+.gray-btn:hover{
+    border:2px solid #ccc;
+    box-shadow: none;
+}
+
+/* STATS GRID */
+.stats-grid {
+    margin-top: 35px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background: white;
+    padding: 0rem 1rem 1rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #4b4e53;
+    height:8rem;
+    box-shadow: 8px 8px rgba(0, 0, 0, 0.4);
+}
+
+.stat-card:hover{
+    box-shadow:none;
+}
+
+.stat-label {
+    font-size: 22px;
+    font-weight: bold;
+    color: #666;
+    font-family: 'kanit';
+}
+
+.stat-number {
+    font-size: 48px;
+    color:#6b4ce6;
+    font-family: "Kanit", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Upcoming Events */
+.upcoming-events-title {
+    font-family: 'kanit';
+    color:black;
+    margin-top: 4rem;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.upcoming-events-container {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(260px, auto);
+    gap: 28px;
+}
+
+.event-item {
+    width: 100%;
+    height: 450px;
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    border: 1px solid #dcdcdc;
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.3);
+    flex-direction: column;
+}
+
+
+.event-item-image .event-img {
+    transition: transform 0.3s ease;
+}
+
+.event-item:hover .event-img {
+    transform: scale(1.1);
+}
+
+.event-item-split {
+    color:black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.event-item-image {
+    width: 100%;
+    height: 55%;
+    position: relative;
+}
+
+.event-item-info {
+    width: 80%;
+    height: 40%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.event-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-status-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #4caf50;
+    color: white;
+    font-size: 13px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.event-category-badge {
+    background: black;
+    color: white;
+    padding: 0.4rem 1rem 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: clamp(0.4rem, 1vw, 2rem);
+    font-weight: bold;
+    width:fit-content;
+    box-shadow: 4px 4px rgba(0, 0, 0, 0.4);
+}
+
+.float-right{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.event-item-title {
+    font-size: clamp(0.8rem, 1vw, 2rem);
+    font-weight: bold;
+    margin: 1rem 0rem 0rem 0rem;
+    font-family: 'kanit';
+    color: black;
+}
+
+.event-item-meta {
+    font-size: 12px;
+    line-height: 1.3;
+    color: black;
+}
+
+.event-actions-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 6px;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.event-details-btn {
+    padding: 8px 15px;
+    border-radius: 1rem;
+    background: #6b4ce6;
+    color: white;
+    border: none;
+    width: fit-content;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.35);
+    font-size: clamp(0.4rem, 1vw, 2rem);
+    text-align: right;
+}
+
+.event-manage-btn {
+    padding: 8px 14px;
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    background: #ffffff;
+    border: 2px solid #6b4ce6;
+    color: #6b4ce6;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.event-details-btn:hover{
+    box-shadow:none;
+}
+
+.event-manage-btn:hover{
+    box-shadow: none;
+}
+
+.view-all-btn {
+    float: right;
+    font-size: 14px;
+    margin-top: -20px;
+    color: white;
+    cursor: pointer;
+}
+
+.event-capacity-text{
+    color:black;
+}
+
+
+/* =========================
+   DARK MODE OVERRIDES
+   ========================= */
+
+html.dark-mode .dashboard-wrapper {
+    background: #0f1115;
+    color: #ffffff;
+}
+
+/* Navbar */
+html.dark-mode .top-navbar {
+    background: #03011E;
+}
+
+/* Nav links */
+html.dark-mode .nav-links {
+    background-color: #324052;
+}
+
+html.dark-mode .nav-link,
+html.dark-mode .nav-links a {
+    color: #ffffff;
+}
+
+html.dark-mode .nav-link.active,
+html.dark-mode .nav-link:hover,
+html.dark-mode .nav-links a:hover {
+    background-color: #ffffff;
+    color: #1a1d24 !important;
+}
+
+/* Page container */
+html.dark-mode .page-container {
+    background: #0f1115;
+}
+
+/* Titles & text */
+html.dark-mode .page-title,
+html.dark-mode .upcoming-events-title,
+html.dark-mode .event-item-title,
+html.dark-mode .stat-label,
+html.dark-mode .event-item-split,
+html.dark-mode .event-item-meta,
+html.dark-mode .event-capacity-text {
+    color: #ffffff;
+}
+
+html.dark-mode .page-sub {
+    color: #c7c9d1;
+}
+
+/* Cards */
+html.dark-mode .stat-card,
+html.dark-mode .event-item {
+    background: #1a1d24;
+    border-color: #2a2f3a;
+}
+
+/* Buttons */
+html.dark-mode .gray-btn {
+    background: #2a2f3a;
+    color: #ffffff;
+    border-color: #2a2f3a;
+}
+
+html.dark-mode .event-manage-btn {
+    background: #1a1d24;
+    color: #ffffff;
+    border-color: #6b4ce6;
+}
+
+/* Dark-mode shadows to match light-mode elevation */
+
+html.dark-mode .top-navbar {
+    box-shadow: 0 6px 18px rgba(255, 255, 255, 0.08);
+}
+
+html.dark-mode .nav-links {
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.12);
+}
+
+html.dark-mode .stat-card {
+    box-shadow: 2px 2px rgba(255, 255, 255, 0.722);
+}
+
+html.dark-mode .event-item {
+    box-shadow: 2px 2px rgba(255, 255, 255, 0.722);
+}
+
+html.dark-mode .purple-btn,
+html.dark-mode .event-details-btn {
+    box-shadow: 2px 2px rgba(255, 255, 255, 0.722);
+}
+
+html.dark-mode .gray-btn,
+html.dark-mode .event-manage-btn {
+    box-shadow: 2px 2px rgba(255, 255, 255, 0.722);
+}
+
+/* Hover consistency */
+html.dark-mode .stat-card:hover,
+html.dark-mode .event-item:hover,
+html.dark-mode .purple-btn:hover,
+html.dark-mode .event-details-btn:hover,
+html.dark-mode .gray-btn:hover,
+html.dark-mode .event-manage-btn:hover {
+    box-shadow: none;
+}
+
+/* Logout button – dark mode behavior */
+html.dark-mode .logout-btn {
+    background: #1a1d24;
+    color: #ffffff;
+    box-shadow: 2px 2px rgba(255, 255, 255, 0.35);
+}
+
+html.dark-mode .logout-btn:hover {
+    background: #ffffff;
+    color: #1a1d24 !important;
+}
+
+
+
+@media (max-width: 768px) {
+    .upcoming-events-title {
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .hamburger-icon {
+        display: block;
+        margin-right:2rem;
+    }
+    .logo-wrapper{
+        margin:0rem 0rem 0rem 0rem;
+    }
+    .stat-label{
+        font-size: clamp(1.0rem, 1vw, 1rem);
+    }
+    .stat-number{
+        font-size: clamp(1.9rem, 1vw, 1rem);
+    }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #6b4ce6;
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        border-radius: 0;
+        z-index: 1000;
+    }
+
+    .nav-links.nav-links-mobile-open {
+        display: flex;
+    }
+
+    .nav-link,
+    .nav-links a {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .user-box {
+        display: none;
+    }
+
+    .mobile-logout {
+        display: block;
+        background: #f44336;
+        color: white;
+        margin-top: 8px;
+        padding: 10px;
+        border-radius: 6px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .page-container {
+        margin: 0rem 1rem 2rem 1rem;
+        padding-top: 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .upcoming-events-container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .top-navbar{
+        padding:0.6rem;
+        gap:20%;
+    }
+    .brandlogo{
+        width:60%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap:0px;
+
+    }
+    .nav-links a,
+    .nav-link {
+        font-size: 1.1rem;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .upcoming-events-container {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .purple-btn,
+    .gray-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1415px) {
+    .nav-links a{
+        font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    }
+
+    .user-box span{
+        display: none;
+    }
+
+    .user-box{
+        width:11%;
+    }
+}
+
+@media (max-width: 1100px) {
+    .user-box{
+        gap:10px;
+    }
+    .event-item-image{
+        height:45%;
+    }
+
+    .title{
+        font-size: clamp(1.1rem, 1.5vw, 0.9rem);
+    }
+
+    .login-logo{
+        width:4rem;
+    }
+
+    .maincard{
+        margin:2rem 0rem 2rem 0rem;
+    }
+    .purple2{
+        padding:0rem;
+    }
+    .login-container{
+        gap:1rem;
+        padding: 1rem;
+    }
+}

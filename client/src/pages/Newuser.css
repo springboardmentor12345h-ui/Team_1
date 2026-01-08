@@ -1,0 +1,181 @@
+.input-field {
+  color: black;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d3d3d3;
+  font-size: 14px;
+  outline: none;
+  background: #fafafa;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.input-field:focus {
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(122,92,255,0.15);
+}
+
+
+.newuser-title {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.newuser-subtitle {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: #777;
+}
+
+.newuser-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.newuser-input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d3d3d3;
+  font-size: 14px;
+  outline: none;
+  background: #fafafa;
+}
+
+.purple2{
+  max-width: 40vw;
+  padding-right: 5rem;
+}
+
+.newuser-select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d3d3d3;
+  font-size: 14px;
+  outline: none;
+  color: #666;
+  background: #fafafa;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='32' width='32' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 26px;
+  appearance: none;
+}
+
+
+.newuser-input:focus {
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(122,92,255,0.15);
+}
+
+.newuser-select:focus {
+  background: #fff;
+  border:1px solid black;
+  box-shadow: 0 0 0 3px rgba(122,92,255,0.15);
+}
+
+.newuser-btn {
+  padding: 14px;
+  color: white;
+  border: none;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.newuser-btn:hover {
+  opacity: 0.9;
+}
+
+.colrbox{
+  height: 100%;
+  width: 4rem;
+  background: linear-gradient(
+    to right,
+    rgba(145,146,255,0) 0%,
+    rgba(145,146,255,0.2) 40%,
+    rgba(145,146,255,1) 100%
+  );
+}
+
+
+.nu-back-link {
+  background: #6b4ce6;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px #9192ff;
+  font-size: 14px;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.nu-back-link:hover {
+  background: #6b4ce6ca;
+  box-shadow:none;
+}
+
+.nu-back-container{
+  display: flex;
+  align-items: flex-start;
+  width:100%;
+  height: fit-content;
+}
+
+@media (max-width: 600px) {
+  /* make the signup form control layout order */
+  .newuser-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Sign Up button stays first */
+  .newuser-btn {
+    order: 1;
+    margin-bottom: 12px;
+  }
+
+  /* Back to login moves below signup */
+  .nu-back-container {
+    order: 2;
+    justify-content: center;
+  }
+
+  .nu-back-link {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0;
+  }
+}
+
+/* default: desktop */
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: block;
+}
+
+/* mobile */
+@media (max-width: 600px) {
+  .mobile-only {
+    display: block;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only.nu-back-link {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+}
